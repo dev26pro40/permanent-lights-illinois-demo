@@ -24,7 +24,8 @@
   section[id]{scroll-margin-top:64px}
 
   /* reveal on scroll (content visible by default; JS only adds motion) */
-  .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .rv{opacity:0;transform:translateY(22px);
+    transition:opacity .85s cubic-bezier(.22,.61,.36,1),transform .85s cubic-bezier(.22,.61,.36,1)}
   .rv.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 
@@ -65,10 +66,46 @@
   .hero-micro{margin-top:16px;font-size:13px;color:var(--muted)}
   .scroll-cue{position:absolute;left:50%;bottom:86px;transform:translateX(-50%);z-index:2;
     color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;
-    display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.7}
+    display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.7;
+    pointer-events:none}
+  .hero.has-switch .scroll-cue{display:none}
   .scroll-cue::after{content:"";width:1px;height:34px;
     background:linear-gradient(var(--amber),transparent);animation:cue 1.8s ease-in-out infinite}
   @keyframes cue{0%,100%{opacity:.4}50%{opacity:1}}
+
+  /* flip-the-switch hero */
+  .hero-bg img{transition:filter 1.2s ease}
+  .hero.dim .hero-bg img{filter:brightness(.34) saturate(.55)}
+  .hero.gsap .hero-bg img,.hero.gsap .hero-glow{transition:none}
+  .hero-glow{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;
+    transition:opacity 1.2s ease;
+    background:
+      radial-gradient(ellipse 90% 42% at 50% 74%, rgba(255,196,110,.30), rgba(242,178,62,.10) 46%, transparent 70%),
+      linear-gradient(180deg, transparent 52%, rgba(242,178,62,.10) 88%)}
+  .hero.lit .hero-glow{opacity:1}
+  .chase{position:absolute;top:64%;left:0;width:130px;height:130px;margin:-65px 0 0;
+    border-radius:50%;pointer-events:none;opacity:0;z-index:1;
+    background:radial-gradient(circle,rgba(255,222,150,.9),rgba(242,178,62,.28) 46%,transparent 70%);
+    filter:blur(8px)}
+  .switch{display:inline-flex;align-items:center;gap:12px;margin-top:22px;
+    background:rgba(10,15,30,.55);border:1px solid #3a4a6e;color:var(--ink);
+    border-radius:999px;padding:12px 20px 12px 14px;font-size:15px;font-weight:600;
+    cursor:pointer;backdrop-filter:blur(6px);min-height:48px;font-family:inherit;
+    margin-bottom:8px}
+  .switch:hover{border-color:var(--amber)}
+  .sw-track{width:52px;height:30px;border-radius:999px;background:#1b2740;
+    border:1px solid #33456c;position:relative;flex:0 0 auto;transition:background .3s,border-color .3s}
+  .sw-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;
+    background:#8b96ad;transition:transform .3s ease,background .3s,box-shadow .3s}
+  .switch.on .sw-track{background:rgba(242,178,62,.25);border-color:var(--amber)}
+  .switch.on .sw-knob{transform:translateX(22px);background:var(--amber);
+    box-shadow:0 0 12px rgba(242,178,62,.8)}
+  .switch[hidden]{display:none}
+
+  /* lenis smooth scroll */
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto !important}
+  .lenis.lenis-stopped{overflow:hidden}
 
   /* proof grid (Airtasker steal: icon + headline + one line) */
   .proof{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
@@ -233,6 +270,8 @@
     <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-house-lit.jpg"
          alt="Home with permanent LED roofline lighting glowing at night" fetchpriority="high">
   </div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="chase" id="chase" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <div class="kicker">Macomb, IL and 60 miles in every direction</div>
     <h1>Your Christmas lights, up all year.</h1>
@@ -242,6 +281,10 @@
       <a class="btn ghost" href="#estimate">See what it costs</a>
     </div>
     <p class="hero-micro">Free quotes. No pressure. Most homes done in one day.</p>
+    <button id="lightSwitch" class="switch" aria-pressed="false" hidden>
+      <span class="sw-track" aria-hidden="true"><span class="sw-knob"></span></span>
+      <span id="lightSwitchLabel">Tap to light it up</span>
+    </button>
   </div>
   <div class="scroll-cue" aria-hidden="true">Scroll</div>
 </header>
@@ -484,9 +527,92 @@
   <a class="btn" href="#quote">Get my free quote</a>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
 (function(){
   "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGsap = (typeof gsap !== "undefined");
+
+  // Lenis smooth scroll (subtle). Skipped under reduced motion or if CDN failed.
+  var lenis = null;
+  if(typeof Lenis !== "undefined" && !reduceMotion){
+    lenis = new Lenis({lerp: 0.1, smoothWheel: true});
+    document.documentElement.classList.add("lenis", "lenis-smooth");
+    var rafLenis = function(t){ lenis.raf(t); requestAnimationFrame(rafLenis); };
+    requestAnimationFrame(rafLenis);
+  }
+  function smoothTo(el, offset){
+    if(!el) return;
+    var off = (typeof offset === "number") ? offset : -70;
+    if(lenis){ lenis.scrollTo(el, {offset: off, duration: 1.15}); }
+    else { el.scrollIntoView({behavior: "smooth", block: "start"}); }
+  }
+  // Anchor links through the smooth scroller (keeps sticky-nav offset right)
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(e){
+      var href = a.getAttribute("href");
+      if(href.length > 1){
+        var t = document.querySelector(href);
+        if(t){ e.preventDefault(); smoothTo(t); }
+      }
+    });
+  });
+
+  // Flip-the-switch hero. No-JS, reduced-motion, and CDN-failure all render the
+  // lit hero; the toggle only appears when GSAP is there to animate it.
+  var hero = document.querySelector(".hero");
+  var heroImg = hero.querySelector(".hero-bg img");
+  var glow = hero.querySelector(".hero-glow");
+  var chase = document.getElementById("chase");
+  var toggle = document.getElementById("lightSwitch");
+  var toggleLabel = document.getElementById("lightSwitchLabel");
+  var isLit = false;
+
+  function setToggle(on){
+    isLit = on;
+    toggle.setAttribute("aria-pressed", on ? "true" : "false");
+    toggle.classList.toggle("on", on);
+    toggleLabel.textContent = on ? "Lights on \u00b7 16 million colors" : "Tap to light it up";
+  }
+  function chaseSweep(){
+    if(!hasGsap || !chase) return;
+    var w = hero.offsetWidth;
+    gsap.timeline()
+      .set(chase, {x: -160, opacity: 0})
+      .to(chase, {opacity: 1, duration: 0.25, ease: "power1.out"}, 0)
+      .to(chase, {x: w + 160, duration: 1.05, ease: "power1.inOut"}, 0)
+      .to(chase, {opacity: 0, duration: 0.3, ease: "power1.in"}, "-=0.35");
+  }
+  function lightsOn(){
+    if(hasGsap){
+      gsap.timeline()
+        .to(heroImg, {filter: "brightness(1) saturate(1)", duration: 1.2, ease: "power2.out"}, 0)
+        .to(glow, {opacity: 1, duration: 1.2, ease: "power2.out"}, 0)
+        .add(chaseSweep, 0.15);
+    }
+    hero.classList.remove("dim");
+    hero.classList.add("lit");
+    setToggle(true);
+  }
+  function lightsOff(){
+    if(hasGsap){
+      gsap.timeline()
+        .to(heroImg, {filter: "brightness(0.34) saturate(0.55)", duration: 0.9, ease: "power2.inOut"}, 0)
+        .to(glow, {opacity: 0, duration: 0.9, ease: "power2.inOut"}, 0);
+    }
+    hero.classList.add("dim");
+    hero.classList.remove("lit");
+    setToggle(false);
+  }
+  if(!reduceMotion && hasGsap){
+    hero.classList.add("dim", "has-switch");
+    hero.classList.add("gsap"); // CSS transitions off; GSAP drives the animation
+    toggle.hidden = false;
+    toggle.addEventListener("click", function(){ isLit ? lightsOff() : lightsOn(); });
+  }
 
   // Estimate calculator
   var ft = document.getElementById("ft");
@@ -540,10 +666,12 @@
     lbCap.textContent = fig.getAttribute("data-cap") || "";
     lb.classList.add("open");
     document.body.style.overflow = "hidden";
+    if(lenis){ lenis.stop(); }
   }
   function closeLb(){
     lb.classList.remove("open");
     document.body.style.overflow = "";
+    if(lenis){ lenis.start(); }
   }
   figs.forEach(function(fig){
     fig.addEventListener("click", function(){ openLb(fig); });
@@ -568,7 +696,7 @@
     if(name){ confirmText.textContent = "Thanks, " + name + ". We will be in touch shortly to set up your free quote."; }
     form.style.display = "none";
     confirm.style.display = "block";
-    confirm.scrollIntoView({behavior:"smooth", block:"center"});
+    smoothTo(confirm, -120);
   });
 
   // Gentle reveal on scroll (with timed fallback so content can never stay hidden)
