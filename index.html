@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Permanent Lights Illinois | Permanent Outdoor Lighting, Macomb IL</title>
-<meta name="description" content="Permanent LED roofline lighting in Macomb, Illinois and 60 miles in every direction. Invisible by day, app-controlled at night. Free quotes.">
+<title>Permanent Christmas Lights, Macomb IL | Permanent Lights Illinois</title>
+<meta name="description" content="Permanent Christmas lights in Macomb, Illinois and 60 miles in every direction. A permanent lighting system, invisible by day, app-controlled at night. Free quotes.">
 <style>
   :root{
-    --bg:#070b16; --bg2:#0b1120; --card:#101828;
+    --bg:#070b16; --bg2:#0b1120; --card:#101828; --card2:#0d1424;
     --ink:#f2f5fa; --muted:#9aa6bb; --line:#1e2a44;
-    --amber:#f2b23e; --amber-d:#c98f22;
+    --amber:#f2b23e; --amber-d:#c98f22; --amber-soft:rgba(242,178,62,.12);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -21,6 +21,12 @@
   img{max-width:100%;display:block}
   a{color:inherit}
   .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  section[id]{scroll-margin-top:64px}
+
+  /* reveal on scroll (content visible by default; JS only adds motion) */
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 
   /* sticky nav */
   .nav{position:sticky;top:0;z-index:50;background:rgba(7,11,22,.92);
@@ -33,115 +39,177 @@
   .nav-links a{text-decoration:none;color:var(--muted)}
   .nav-links a:hover{color:var(--ink)}
   .btn{display:inline-block;background:var(--amber);color:#1a1206;font-weight:700;
-    padding:13px 26px;border-radius:10px;text-decoration:none;border:0;cursor:pointer;
-    font-size:16px}
+    padding:14px 28px;border-radius:12px;text-decoration:none;border:0;cursor:pointer;
+    font-size:16px;transition:transform .15s ease,background .15s ease}
   .btn:hover{background:var(--amber-d)}
+  .btn:active{transform:scale(.98)}
   .btn-nav{padding:10px 18px;font-size:15px}
+  .btn:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{
+    outline:2px solid var(--amber);outline-offset:2px}
 
   /* hero */
-  .hero{position:relative;min-height:92svh;display:flex;align-items:flex-end;
+  .hero{position:relative;min-height:94svh;display:flex;align-items:flex-end;
     background:#05070d}
   .hero-bg{position:absolute;inset:0}
   .hero-bg img{width:100%;height:100%;object-fit:cover}
   .hero-bg::after{content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(5,7,13,.25) 0%,rgba(5,7,13,.05) 35%,rgba(7,11,22,.96) 92%)}
-  .hero-inner{position:relative;z-index:2;padding-bottom:88px;width:100%}
+    background:linear-gradient(180deg,rgba(5,7,13,.35) 0%,rgba(5,7,13,.05) 35%,rgba(7,11,22,.97) 94%)}
+  .hero-inner{position:relative;z-index:2;padding-bottom:96px;width:100%}
   .kicker{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:2.5px;
     text-transform:uppercase;margin-bottom:14px}
-  .hero h1{font-size:40px;line-height:1.12;letter-spacing:-.5px;max-width:14ch;
+  .hero h1{font-size:42px;line-height:1.1;letter-spacing:-.8px;max-width:13ch;
     margin-bottom:14px}
   .hero p.sub{color:#d5dbe7;font-size:18px;max-width:34ch;margin-bottom:26px}
   .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap}
   .ghost{border:1px solid #3a4a6e;color:var(--ink);background:rgba(10,15,30,.4)}
+  .hero-micro{margin-top:16px;font-size:13px;color:var(--muted)}
+  .scroll-cue{position:absolute;left:50%;bottom:86px;transform:translateX(-50%);z-index:2;
+    color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.7}
+  .scroll-cue::after{content:"";width:1px;height:34px;
+    background:linear-gradient(var(--amber),transparent);animation:cue 1.8s ease-in-out infinite}
+  @keyframes cue{0%,100%{opacity:.4}50%{opacity:1}}
 
-  /* proof strip */
+  /* proof grid (Airtasker steal: icon + headline + one line) */
   .proof{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
     background:var(--bg2)}
-  .proof .wrap{display:flex;flex-wrap:wrap;gap:10px 34px;justify-content:center;
-    padding-top:18px;padding-bottom:18px}
-  .proof div{font-size:14px;color:var(--muted);white-space:nowrap}
-  .proof b{color:var(--amber);font-weight:700;margin-right:8px}
+  .proof .wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px;
+    padding-top:22px;padding-bottom:22px}
+  .proof-item{display:flex;gap:12px;align-items:flex-start}
+  .proof-item svg{flex:0 0 26px;width:26px;height:26px;stroke:var(--amber);fill:none;
+    stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+  .proof-item b{display:block;font-size:15px;color:var(--ink);font-weight:700}
+  .proof-item span{font-size:13px;color:var(--muted);line-height:1.45}
 
-  section{padding:72px 0}
+  section{padding:76px 0}
   .sec-kicker{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:2.5px;
     text-transform:uppercase;margin-bottom:10px}
-  h2{font-size:30px;line-height:1.2;letter-spacing:-.4px;margin-bottom:12px}
+  h2{font-size:31px;line-height:1.18;letter-spacing:-.5px;margin-bottom:12px}
   .lede{color:var(--muted);font-size:17px;max-width:56ch;margin-bottom:30px}
 
-  /* gallery */
-  .gal{display:grid;gap:14px;grid-auto-flow:column;grid-auto-columns:82%;
-    overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;
+  /* gallery (Hearst steal: the scroll is the tour) */
+  .gal{display:grid;gap:14px;grid-auto-flow:column;grid-auto-columns:84%;
+    overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;
     scrollbar-width:none}
   .gal::-webkit-scrollbar{display:none}
-  .gal figure{scroll-snap-align:start;border-radius:14px;overflow:hidden;
-    border:1px solid var(--line);background:var(--card)}
+  .gal figure{scroll-snap-align:start;border-radius:16px;overflow:hidden;
+    border:1px solid var(--line);background:var(--card);cursor:zoom-in}
   .gal img{aspect-ratio:4/3;object-fit:cover;width:100%}
-  .gal figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}
-  .gal-note{font-size:13px;color:var(--muted);margin-top:12px}
+  .gal figcaption{padding:12px 16px}
+  .gal figcaption b{display:block;font-size:15px}
+  .gal figcaption span{font-size:13px;color:var(--muted)}
+  .gal-dots{display:flex;gap:8px;justify-content:center;margin-top:14px}
+  .gal-dots button{width:8px;height:8px;border-radius:50%;border:0;background:#2a3a5e;
+    cursor:pointer;padding:0;transition:background .2s}
+  .gal-dots button.on{background:var(--amber)}
+  .swipe-hint{text-align:center;font-size:12px;color:#5d6b87;margin-top:8px;
+    letter-spacing:1px;text-transform:uppercase}
+  .gal-note{font-size:13px;color:var(--muted);margin-top:14px}
 
-  /* steps */
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(3,5,10,.94);
+    display:none;align-items:center;justify-content:center;padding:20px}
+  .lb.open{display:flex}
+  .lb figure{max-width:min(920px,100%);text-align:center}
+  .lb img{max-height:76vh;width:auto;max-width:100%;border-radius:12px;margin:0 auto}
+  .lb figcaption{margin-top:12px;color:var(--muted);font-size:14px}
+  .lb-close{position:absolute;top:16px;right:20px;background:none;border:1px solid var(--line);
+    color:var(--ink);font-size:20px;width:44px;height:44px;border-radius:50%;cursor:pointer}
+
+  /* steps (Wix steal: tinted numbered card) */
   .steps{display:grid;gap:14px}
-  .step{background:var(--card);border:1px solid var(--line);border-radius:14px;
-    padding:24px}
-  .step .num{color:var(--amber);font-weight:800;font-size:15px;letter-spacing:2px;
-    margin-bottom:8px}
+  .step{background:linear-gradient(180deg,var(--card),var(--card2));
+    border:1px solid var(--line);border-radius:16px;padding:26px 24px;position:relative;
+    overflow:hidden}
+  .step::before{content:attr(data-n);position:absolute;top:6px;right:16px;
+    font-size:64px;font-weight:800;color:rgba(242,178,62,.08);line-height:1;
+    letter-spacing:-2px}
+  .step .num{color:var(--amber);font-weight:800;font-size:14px;letter-spacing:2.5px;
+    margin-bottom:10px}
   .step h3{font-size:20px;margin-bottom:8px}
   .step p{color:var(--muted);font-size:16px}
 
-  /* calculator */
-  .calc{background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:28px 24px;max-width:640px}
-  .calc label{display:block;font-weight:700;margin-bottom:6px}
-  .calc output{display:block;font-size:15px;color:var(--muted);margin-bottom:14px}
-  input[type=range]{width:100%;accent-color:var(--amber);height:32px}
-  .calc-result{font-size:34px;font-weight:800;letter-spacing:-.5px;margin:18px 0 6px}
-  .calc-result small{font-size:16px;font-weight:600;color:var(--muted)}
-  .calc-fine{font-size:13px;color:var(--muted)}
-  .calc .btn{margin-top:18px;width:100%;text-align:center}
+  /* calculator (Origin steal: contained dark card, huge number, insight panel) */
+  .calc{background:linear-gradient(180deg,#0d1526,#0a101f);
+    border:1px solid #24344f;border-radius:20px;padding:32px 26px;max-width:640px;
+    box-shadow:0 24px 60px rgba(0,0,0,.45)}
+  .calc label{display:block;font-weight:700;margin-bottom:4px;font-size:15px}
+  .calc output{display:block;font-size:14px;color:var(--muted);margin-bottom:10px}
+  .slider-wrap{position:relative;padding-bottom:22px}
+  input[type=range]{width:100%;accent-color:var(--amber);height:34px;cursor:pointer}
+  .ticks{display:flex;justify-content:space-between;font-size:12px;color:#5d6b87;
+    margin-top:2px}
+  .calc-result{font-size:15px;color:var(--muted);margin:14px 0 4px}
+  .calc-result strong{display:block;font-size:44px;font-weight:800;letter-spacing:-1px;
+    color:var(--ink);line-height:1.15}
+  .calc-insight{background:var(--amber-soft);border:1px solid rgba(242,178,62,.28);
+    border-radius:12px;padding:14px 16px;font-size:14px;color:#e8d9b8;margin:14px 0 4px}
+  .calc-insight b{color:var(--amber)}
+  .calc-fine{font-size:13px;color:var(--muted);margin-top:10px}
+  .calc-compare{font-size:14px;color:#e8d9b8;margin-top:10px;padding-top:10px;
+    border-top:1px dashed #24344f}
+  .calc .btn{margin-top:20px;width:100%;text-align:center}
 
   /* faq */
   details{background:var(--card);border:1px solid var(--line);border-radius:12px;
-    padding:18px 20px;margin-bottom:10px}
-  summary{font-weight:700;font-size:17px;cursor:pointer;list-style:none}
+    padding:0 20px;margin-bottom:10px;overflow:hidden}
+  summary{font-weight:700;font-size:17px;cursor:pointer;list-style:none;
+    padding:18px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}
   summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";float:right;color:var(--amber);font-size:22px;line-height:1}
-  details[open] summary::after{content:"\2013"}
-  details p{color:var(--muted);margin-top:10px;font-size:16px}
+  summary .pm{color:var(--amber);font-size:24px;line-height:1;flex:0 0 auto;transition:transform .2s}
+  details[open] .pm{transform:rotate(45deg)}
+  details .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease}
+  details[open] .a{grid-template-rows:1fr}
+  details .a > div{overflow:hidden}
+  details .a p{color:var(--muted);font-size:16px;padding:0 0 18px}
 
-  /* form */
-  .form-card{background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:28px 24px;max-width:640px}
+  /* form (HoneyBook steal: conversational headline, minimal fields) */
+  .form-card{background:linear-gradient(180deg,#0d1526,#0a101f);
+    border:1px solid #24344f;border-radius:20px;padding:32px 26px;max-width:640px;
+    box-shadow:0 24px 60px rgba(0,0,0,.45)}
   .field{margin-bottom:16px}
   .field label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
-  .field input,.field select{width:100%;padding:13px 14px;border-radius:10px;
+  .field input,.field select{width:100%;padding:14px;border-radius:10px;
     border:1px solid #2a3a5e;background:#0b1224;color:var(--ink);font-size:16px}
   .field input:focus,.field select:focus{outline:2px solid var(--amber);border-color:var(--amber)}
-  .form-card .btn{width:100%;margin-top:6px}
-  .form-note{font-size:13px;color:var(--muted);margin-top:12px}
-  .confirm{display:none;text-align:center;padding:20px 0}
+  .form-card .btn{width:100%;margin-top:8px}
+  .form-sub{font-size:13px;color:var(--muted);margin-top:12px;text-align:center}
+  .form-note{font-size:12px;color:#5d6b87;margin-top:10px;text-align:center}
+  .confirm{display:none;text-align:center;padding:24px 0}
+  .confirm .ok{width:56px;height:56px;border-radius:50%;background:var(--amber-soft);
+    border:1px solid rgba(242,178,62,.4);display:flex;align-items:center;
+    justify-content:center;margin:0 auto 16px}
+  .confirm .ok svg{width:26px;height:26px;stroke:var(--amber);fill:none;
+    stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
   .confirm h3{font-size:24px;margin-bottom:10px}
   .confirm p{color:var(--muted)}
 
-  footer{border-top:1px solid var(--line);padding:34px 0 110px;color:var(--muted);
-    font-size:14px}
+  footer{border-top:1px solid var(--line);padding:36px 0 calc(110px + env(safe-area-inset-bottom));
+    color:var(--muted);font-size:14px}
   footer .wrap{display:flex;flex-direction:column;gap:8px}
   footer .demo-tag{font-size:12px;color:#5d6b87}
 
   /* sticky mobile cta */
-  .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:12px 16px;
+  .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:60;
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
     background:rgba(7,11,22,.95);border-top:1px solid var(--line);
     backdrop-filter:blur(8px)}
   .sticky-cta .btn{width:100%;text-align:center}
 
   @media(min-width:768px){
     .nav-links{display:flex}
-    .hero h1{font-size:60px}
+    .hero h1{font-size:64px}
     .hero p.sub{font-size:20px}
+    .hero-inner{padding-bottom:110px}
+    .proof .wrap{grid-template-columns:repeat(4,1fr);gap:20px}
     .gal{grid-auto-flow:row;grid-template-columns:1fr 1fr;overflow:visible}
+    .gal figure{cursor:default}
+    .gal-dots,.swipe-hint{display:none}
     .steps{grid-template-columns:repeat(3,1fr)}
-    h2{font-size:36px}
+    h2{font-size:38px}
     .sticky-cta{display:none}
     footer{padding-bottom:40px}
+    .scroll-cue{display:none}
   }
 </style>
 </head>
@@ -167,90 +235,121 @@
   </div>
   <div class="wrap hero-inner">
     <div class="kicker">Macomb, IL and 60 miles in every direction</div>
-    <h1>Your house, lit every night of the year.</h1>
-    <p class="sub">Permanent LED roofline lighting. Invisible by day. Controlled from your phone at night.</p>
+    <h1>Your Christmas lights, up all year.</h1>
+    <p class="sub">A permanent lighting system on your roofline. Invisible by day. Controlled from your phone at night.</p>
     <div class="hero-cta-row">
       <a class="btn" href="#quote">Get my free quote</a>
       <a class="btn ghost" href="#estimate">See what it costs</a>
     </div>
+    <p class="hero-micro">Free quotes. No pressure. Most homes done in one day.</p>
   </div>
+  <div class="scroll-cue" aria-hidden="true">Scroll</div>
 </header>
 
 <div class="proof">
   <div class="wrap">
-    <div><b>✓</b>IronPeak dealer</div>
-    <div><b>✓</b>5-year product warranty</div>
-    <div><b>✓</b>Most homes done in one day</div>
+    <div class="proof-item">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.5 1 2.5h6c0-1 .2-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>
+      <div><b>IronPeak dealer</b><span>Pro-grade system, installed right</span></div>
+    </div>
+    <div class="proof-item">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div><b>5-year warranty</b><span>On LEDs, controller, and power</span></div>
+    </div>
+    <div class="proof-item">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      <div><b>One-day install</b><span>Most homes done before dinner</span></div>
+    </div>
+    <div class="proof-item">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      <div><b>Locally owned</b><span>Based in Macomb, Illinois</span></div>
+    </div>
   </div>
 </div>
 
 <section id="gallery">
   <div class="wrap">
-    <div class="sec-kicker">The work</div>
-    <h2>Night does the selling.</h2>
-    <p class="lede">One install, every holiday. Game day, Christmas, the Fourth, or just a warm white glow every evening.</p>
-    <div class="gal">
-      <figure>
+    <div class="sec-kicker rv">The work</div>
+    <h2 class="rv">Night does the selling.</h2>
+    <p class="lede rv">One install, every holiday. Game day, Christmas, the Fourth, or just a warm white glow every evening. Tap any photo to look closer.</p>
+    <div class="gal" id="gal">
+      <figure data-cap="Full roofline, glowing at night">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-house-lit.jpg"
              alt="Full home with permanent roofline LED lighting glowing at night" loading="lazy">
-        <figcaption>Full roofline, night</figcaption>
+        <figcaption><b>Full roofline</b><span>Glowing at night</span></figcaption>
       </figure>
-      <figure>
+      <figure data-cap="Roofline detail at dusk">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-hero-roofline.jpg"
              alt="Roofline traced in permanent LED light at dusk" loading="lazy">
-        <figcaption>Roofline detail, dusk</figcaption>
+        <figcaption><b>Roofline detail</b><span>At dusk</span></figcaption>
       </figure>
-      <figure>
+      <figure data-cap="Peak install, up close">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-install-1.jpg"
              alt="Installer fitting permanent LED track on a roof peak" loading="lazy">
-        <figcaption>Peak install, up close</figcaption>
+        <figcaption><b>Peak install</b><span>Up close</span></figcaption>
       </figure>
-      <figure>
+      <figure data-cap="Track install along the eave">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-install-2.jpg"
              alt="Permanent LED track being installed along the eave" loading="lazy">
-        <figcaption>Track install, eave line</figcaption>
+        <figcaption><b>Track install</b><span>Along the eave</span></figcaption>
       </figure>
     </div>
+    <div class="gal-dots" id="galDots" role="tablist" aria-label="Gallery pages"></div>
+    <div class="swipe-hint">Swipe</div>
     <p class="gal-note">Sample installs shown. Our own local installs go here as we complete them.</p>
   </div>
 </section>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-close" id="lbClose" aria-label="Close photo viewer">×</button>
+  <figure>
+    <img id="lbImg" src="" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+</div>
+
 <section id="how" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <div class="sec-kicker">How it works</div>
-    <h2>Three steps. No ladder on your end.</h2>
-    <p class="lede">You never hang a light again. Here is the whole process.</p>
+    <div class="sec-kicker rv">How it works</div>
+    <h2 class="rv">Three steps. No ladder on your end.</h2>
+    <p class="lede rv">You never hang a light again. Here is the whole process.</p>
     <div class="steps">
-      <div class="step">
-        <div class="num">01</div>
+      <div class="step rv" data-n="01">
+        <div class="num">Step 01</div>
         <h3>Free quote</h3>
         <p>We measure your roofline and give you an exact price. No pressure, no obligation.</p>
       </div>
-      <div class="step">
-        <div class="num">02</div>
+      <div class="step rv" data-n="02">
+        <div class="num">Step 02</div>
         <h3>One-day install</h3>
         <p>Color-matched track goes up along your eaves. Near-invisible from the street by day.</p>
       </div>
-      <div class="step">
-        <div class="num">03</div>
+      <div class="step rv" data-n="03">
+        <div class="num">Step 03</div>
         <h3>Control from your phone</h3>
         <p>16 million colors, holiday presets, and timers. Set it once or change it nightly.</p>
       </div>
     </div>
+    <p class="gal-note rv" style="margin-top:18px">You do not need to be home for the install. We just need exterior access and a place to plug in.</p>
   </div>
 </section>
 
 <section id="estimate">
   <div class="wrap">
-    <div class="sec-kicker">Estimate</div>
-    <h2>What will it run?</h2>
-    <p class="lede">Drag the slider to your roofline length. Most installers charge around $30 per foot.</p>
-    <div class="calc">
+    <div class="sec-kicker rv">Estimate</div>
+    <h2 class="rv">What will it run?</h2>
+    <p class="lede rv">Drag the slider to your roofline length. Most installers charge around $30 per foot.</p>
+    <div class="calc rv">
       <label for="ft">Roofline length</label>
       <output id="ftOut" for="ft">150 ft</output>
-      <input type="range" id="ft" min="80" max="400" step="5" value="150" aria-label="Roofline length in feet">
-      <div class="calc-result"><small>About</small> <span id="est">$3,750 – $5,250</span></div>
-      <p class="calc-fine">Rough estimate at $25–35 per foot installed. Your free quote is exact.</p>
+      <div class="slider-wrap">
+        <input type="range" id="ft" min="80" max="400" step="5" value="150" aria-label="Roofline length in feet">
+        <div class="ticks" aria-hidden="true"><span>80 ft</span><span>240 ft</span><span>400 ft</span></div>
+      </div>
+      <div class="calc-result">Your rough estimate<strong id="est">$3,750 – $5,250</strong></div>
+      <div class="calc-insight"><b>Most homes land between $25 and $35 per foot.</b> A typical 150 ft home runs a few thousand dollars, installed in a day.</div>
+      <p class="calc-fine">Rough estimate only. Your free quote is exact, measured on your roof.</p>
+      <p class="calc-compare">Ten years of paying $300 a year to hang lights is $3,000, gone. This stays on your house.</p>
       <a class="btn" href="#quote">Get my exact quote</a>
     </div>
   </div>
@@ -258,50 +357,82 @@
 
 <section id="area" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <div class="sec-kicker">Service area</div>
-    <h2>60 miles in every direction.</h2>
-    <p class="lede">Based in Macomb, Illinois. We install permanent lighting across west-central Illinois, including:</p>
-    <p style="font-size:17px;line-height:2">
+    <div class="sec-kicker rv">Service area</div>
+    <h2 class="rv">60 miles in every direction.</h2>
+    <p class="lede rv">Based in Macomb, Illinois. We install permanent lighting across west-central Illinois, including:</p>
+    <p class="rv" style="font-size:17px;line-height:2.1">
       Macomb · Quincy · Galesburg · Rushville · Monmouth · Canton · Jacksonville · Pittsfield · Bushnell · Carthage
     </p>
-    <p class="gal-note">Outside the circle? Ask anyway. If we can get there in a day, we will.</p>
+    <p class="gal-note rv">Outside the circle? Ask anyway. If we can get there in a day, we will.</p>
   </div>
 </section>
 
 <section id="faq">
   <div class="wrap" style="max-width:720px">
-    <div class="sec-kicker">Questions</div>
-    <h2>Straight answers.</h2>
-    <p class="lede">The things everyone asks before they book.</p>
-    <details>
-      <summary>How much does permanent lighting cost?</summary>
-      <p>Most homes land between $25 and $35 per foot installed, so a typical home runs a few thousand dollars total. Use the estimator above for a rough number, then get a free exact quote. No surprises.</p>
+    <div class="sec-kicker rv">Questions</div>
+    <h2 class="rv">Straight answers.</h2>
+    <p class="lede rv">The things everyone asks before they book.</p>
+    <details class="rv">
+      <summary>Is it worth the money?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>If you pay around $300 a year to have lights hung, or you climb the ladder yourself every fall, the math breaks even in about 8 to 10 years. And you get year-round use, not six weeks. If you plan to move in a couple of years, it is probably not worth it.</p></div></div>
     </details>
-    <details>
-      <summary>How long does the install take?</summary>
-      <p>Most homes are done in one day. The track is pre-built and color-matched, so there is no cutting and guessing on your roof.</p>
+    <details class="rv">
+      <summary>What happens when a bulb dies?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>Single nodes can be swapped without redoing the whole run. Parts are covered by the 5-year product warranty. Labor for service calls is spelled out in your contract before we start.</p></div></div>
     </details>
-    <details>
-      <summary>Do I control it from my phone?</summary>
-      <p>Yes. The app gives you 16 million colors, presets for every holiday, and timers. Set a warm white glow every night or go all out for game day.</p>
+    <details class="rv">
+      <summary>How much does permanent Christmas lighting cost?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>Most homes land between $25 and $35 per foot installed, so a typical home runs a few thousand dollars total. Use the estimator above for a rough number, then get a free exact quote. No surprises.</p></div></div>
     </details>
-    <details>
-      <summary>What about my HOA?</summary>
-      <p>The track is color-matched to your trim and near-invisible during the day. We can provide product specs for your HOA review before you commit to anything.</p>
+    <details class="rv">
+      <summary>How much electricity does it use?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>Very little. Each node runs about 0.6 watts, so a full roofline costs less per month than a porch light left on.</p></div></div>
     </details>
-    <details>
-      <summary>What is the warranty?</summary>
-      <p>IronPeak backs the LEDs, controller, and power supply with a 5-year product warranty. If a part fails, it gets replaced.</p>
+    <details class="rv">
+      <summary>Will it bother my neighbors?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>No. The light washes your house, not theirs. Everything is dimmable and on timers. Most owners run a soft warm white nightly and save the color shows for holidays.</p></div></div>
+    </details>
+    <details class="rv">
+      <summary>What if I sell my house?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>It stays with the house and transfers through the app. It photographs great for listings and it is a real curb-appeal talking point.</p></div></div>
+    </details>
+    <details class="rv">
+      <summary>Can I just buy lights and do it myself?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>You can. A DIY kit runs around $700 in parts. What you do not get: a clean daytime look, matched peaks, warranty labor, or your weekends back. Professionally installed, even a DIY-brand system runs $1,500 to $4,000+.</p></div></div>
+    </details>
+    <details class="rv">
+      <summary>Do they survive winter and ice?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>Yes. Sealed, outdoor-rated components built for freeze and thaw. We install March through November because the mounting sealant needs 40 degrees or warmer to cure.</p></div></div>
+    </details>
+    <details class="rv">
+      <summary>How long does the install take? Do I need to be home?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>Most homes are done in one day. You do not need to be home. We just need exterior access and a place to plug in.</p></div></div>
+    </details>
+    <details class="rv">
+      <summary>Do I control it from my phone?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>Yes. The app gives you 16 million colors, presets for every holiday, and timers. Set a warm white glow every night or go all out for game day.</p></div></div>
+    </details>
+    <details class="rv">
+      <summary>What about my HOA?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>The track is color-matched to your trim and near-invisible during the day. We can provide product specs for your HOA review before you commit to anything. Budget 30 to 60 days for approval and start early.</p></div></div>
+    </details>
+    <details class="rv">
+      <summary>What is the warranty?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>IronPeak backs the LEDs, controller, and power supply with a 5-year product warranty. If a part fails, it gets replaced.</p></div></div>
+    </details>
+    <details class="rv">
+      <summary>Is this the same as permanent lighting?<span class="pm" aria-hidden="true">+</span></summary>
+      <div class="a"><div><p>Yes. Permanent Christmas lights, permanent holiday lighting, and permanent roofline lighting are all names for the same thing: LEDs installed on your home year-round.</p></div></div>
     </details>
   </div>
 </section>
 
 <section id="quote" style="background:var(--bg2);border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="sec-kicker">Free quote</div>
-    <h2>Get your exact price.</h2>
-    <p class="lede">Tell us where to reach you. We measure, we quote, you decide.</p>
-    <div class="form-card">
+    <div class="sec-kicker rv">Free quote</div>
+    <h2 class="rv">Get your exact price.</h2>
+    <p class="lede rv">Tell us where to reach you. We measure, we quote, you decide.</p>
+    <div class="form-card rv">
       <form id="quoteForm" novalidate>
         <div class="field">
           <label for="fName">Name</label>
@@ -326,9 +457,13 @@
           </select>
         </div>
         <button class="btn" type="submit">Get my free quote</button>
+        <p class="form-sub">No spam, no pressure. Just a price.</p>
         <p class="form-note">Demo form. Not connected to anything yet.</p>
       </form>
       <div class="confirm" id="quoteConfirm" role="status">
+        <div class="ok" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>
+        </div>
         <h3>Got it.</h3>
         <p id="confirmText">Thanks. We will be in touch shortly to set up your free quote.</p>
       </div>
@@ -352,6 +487,7 @@
 <script>
 (function(){
   "use strict";
+
   // Estimate calculator
   var ft = document.getElementById("ft");
   var ftOut = document.getElementById("ftOut");
@@ -364,6 +500,57 @@
   }
   ft.addEventListener("input", update);
   update();
+
+  // Gallery dots (mobile swipe position)
+  var gal = document.getElementById("gal");
+  var dotsWrap = document.getElementById("galDots");
+  var figs = gal.querySelectorAll("figure");
+  var dots = [];
+  figs.forEach(function(fig, i){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-label", "Show photo " + (i + 1));
+    b.addEventListener("click", function(){
+      gal.scrollTo({left: fig.offsetLeft - gal.offsetLeft - 20, behavior: "smooth"});
+    });
+    dotsWrap.appendChild(b);
+    dots.push(b);
+  });
+  function syncDots(){
+    var idx = 0, best = Infinity;
+    figs.forEach(function(fig, i){
+      var d = Math.abs(fig.offsetLeft - gal.offsetLeft - gal.scrollLeft - 20);
+      if(d < best){ best = d; idx = i; }
+    });
+    dots.forEach(function(b, i){ b.classList.toggle("on", i === idx); });
+  }
+  gal.addEventListener("scroll", syncDots, {passive:true});
+  syncDots();
+
+  // Lightbox (mobile only; desktop keeps the grid static)
+  var lb = document.getElementById("lb");
+  var lbImg = document.getElementById("lbImg");
+  var lbCap = document.getElementById("lbCap");
+  function openLb(fig){
+    if(window.matchMedia("(min-width:768px)").matches) return;
+    var img = fig.querySelector("img");
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbCap.textContent = fig.getAttribute("data-cap") || "";
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeLb(){
+    lb.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  figs.forEach(function(fig){
+    fig.addEventListener("click", function(){ openLb(fig); });
+  });
+  document.getElementById("lbClose").addEventListener("click", closeLb);
+  lb.addEventListener("click", function(e){ if(e.target === lb) closeLb(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeLb(); });
 
   // Quote form: front-end confirmation only (demo)
   var form = document.getElementById("quoteForm");
@@ -383,6 +570,22 @@
     confirm.style.display = "block";
     confirm.scrollIntoView({behavior:"smooth", block:"center"});
   });
+
+  // Gentle reveal on scroll (with timed fallback so content can never stay hidden)
+  var revealed = function(){
+    document.querySelectorAll(".rv").forEach(function(el){ el.classList.add("in"); });
+  };
+  if("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, {threshold: 0.12, rootMargin: "0px 0px -40px 0px"});
+    document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+    setTimeout(revealed, 2500);
+  } else {
+    revealed();
+  }
 })();
 </script>
 </body>
