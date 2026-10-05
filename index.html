@@ -57,7 +57,8 @@
     background:linear-gradient(180deg,rgba(5,7,13,.35) 0%,rgba(5,7,13,.05) 35%,rgba(7,11,22,.97) 94%)}
   .hero-inner{position:relative;z-index:2;padding-bottom:96px;width:100%}
   .kicker{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:2.5px;
-    text-transform:uppercase;margin-bottom:14px}
+    text-transform:uppercase;margin-bottom:14px;text-wrap:balance;
+    text-shadow:0 1px 10px rgba(0,0,0,.65),0 0 2px rgba(0,0,0,.8)}
   .hero h1{font-size:42px;line-height:1.1;letter-spacing:-.8px;max-width:13ch;
     margin-bottom:14px}
   .hero p.sub{color:#d5dbe7;font-size:18px;max-width:34ch;margin-bottom:26px}
@@ -66,41 +67,11 @@
   .hero-micro{margin-top:16px;font-size:13px;color:var(--muted)}
   .scroll-cue{position:absolute;left:50%;bottom:86px;transform:translateX(-50%);z-index:2;
     color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;
-    display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.7;
+    display:none;flex-direction:column;align-items:center;gap:6px;opacity:.7;
     pointer-events:none}
-  .hero.has-switch .scroll-cue{display:none}
   .scroll-cue::after{content:"";width:1px;height:34px;
     background:linear-gradient(var(--amber),transparent);animation:cue 1.8s ease-in-out infinite}
   @keyframes cue{0%,100%{opacity:.4}50%{opacity:1}}
-
-  /* flip-the-switch hero */
-  .hero-bg img{transition:filter 1.2s ease}
-  .hero.dim .hero-bg img{filter:brightness(.34) saturate(.55)}
-  .hero.gsap .hero-bg img,.hero.gsap .hero-glow{transition:none}
-  .hero-glow{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;
-    transition:opacity 1.2s ease;
-    background:
-      radial-gradient(ellipse 90% 42% at 50% 74%, rgba(255,196,110,.30), rgba(242,178,62,.10) 46%, transparent 70%),
-      linear-gradient(180deg, transparent 52%, rgba(242,178,62,.10) 88%)}
-  .hero.lit .hero-glow{opacity:1}
-  .chase{position:absolute;top:64%;left:0;width:130px;height:130px;margin:-65px 0 0;
-    border-radius:50%;pointer-events:none;opacity:0;z-index:1;
-    background:radial-gradient(circle,rgba(255,222,150,.9),rgba(242,178,62,.28) 46%,transparent 70%);
-    filter:blur(8px)}
-  .switch{display:inline-flex;align-items:center;gap:12px;margin-top:22px;
-    background:rgba(10,15,30,.55);border:1px solid #3a4a6e;color:var(--ink);
-    border-radius:999px;padding:12px 20px 12px 14px;font-size:15px;font-weight:600;
-    cursor:pointer;backdrop-filter:blur(6px);min-height:48px;font-family:inherit;
-    margin-bottom:8px}
-  .switch:hover{border-color:var(--amber)}
-  .sw-track{width:52px;height:30px;border-radius:999px;background:#1b2740;
-    border:1px solid #33456c;position:relative;flex:0 0 auto;transition:background .3s,border-color .3s}
-  .sw-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;
-    background:#8b96ad;transition:transform .3s ease,background .3s,box-shadow .3s}
-  .switch.on .sw-track{background:rgba(242,178,62,.25);border-color:var(--amber)}
-  .switch.on .sw-knob{transform:translateX(22px);background:var(--amber);
-    box-shadow:0 0 12px rgba(242,178,62,.8)}
-  .switch[hidden]{display:none}
 
   /* lenis smooth scroll */
   html.lenis,html.lenis body{height:auto}
@@ -225,6 +196,10 @@
     color:var(--muted);font-size:14px}
   footer .wrap{display:flex;flex-direction:column;gap:8px}
   footer .demo-tag{font-size:12px;color:#5d6b87}
+  .pd-card{background:#ffffff;border-radius:14px;padding:16px 18px 12px;
+    display:inline-block;max-width:250px;margin-top:10px;align-self:flex-start}
+  .pd-card img{width:150px;height:auto;display:block}
+  .pd-card p{font-size:12px;color:#4a5568;margin:10px 0 2px;line-height:1.5}
 
   /* sticky mobile cta */
   .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:60;
@@ -246,7 +221,7 @@
     h2{font-size:38px}
     .sticky-cta{display:none}
     footer{padding-bottom:40px}
-    .scroll-cue{display:none}
+    .scroll-cue{display:flex}
   }
 </style>
 </head>
@@ -270,8 +245,6 @@
     <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-house-lit.jpg"
          alt="Home with permanent LED roofline lighting glowing at night" fetchpriority="high">
   </div>
-  <div class="hero-glow" aria-hidden="true"></div>
-  <div class="chase" id="chase" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <div class="kicker">Macomb, IL and 60 miles in every direction</div>
     <h1>Your Christmas lights, up all year.</h1>
@@ -281,10 +254,6 @@
       <a class="btn ghost" href="#estimate">See what it costs</a>
     </div>
     <p class="hero-micro">Free quotes. No pressure. Most homes done in one day.</p>
-    <button id="lightSwitch" class="switch" aria-pressed="false" hidden>
-      <span class="sw-track" aria-hidden="true"><span class="sw-knob"></span></span>
-      <span id="lightSwitchLabel">Tap to light it up</span>
-    </button>
   </div>
   <div class="scroll-cue" aria-hidden="true">Scroll</div>
 </header>
@@ -518,6 +487,10 @@
   <div class="wrap">
     <div><strong style="color:var(--ink)">Permanent Lights Illinois</strong></div>
     <div>Permanent outdoor LED lighting. Macomb, Illinois and 60 miles in every direction.</div>
+    <div class="pd-card">
+      <img src="assets/premier-duo-logo.svg" alt="Premier Duo LLC logo" width="150" height="105">
+      <p>Permanent Lights Illinois is a d/b/a of Premier Duo LLC.</p>
+    </div>
     <div class="demo-tag">Demo preview. Business name, service area, and contact details not final.</div>
     <div class="demo-tag">© 2026</div>
   </div>
@@ -527,14 +500,12 @@
   <a class="btn" href="#quote">Get my free quote</a>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
 (function(){
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var hasGsap = (typeof gsap !== "undefined");
 
   // Lenis smooth scroll (subtle). Skipped under reduced motion or if CDN failed.
   var lenis = null;
@@ -560,59 +531,6 @@
       }
     });
   });
-
-  // Flip-the-switch hero. No-JS, reduced-motion, and CDN-failure all render the
-  // lit hero; the toggle only appears when GSAP is there to animate it.
-  var hero = document.querySelector(".hero");
-  var heroImg = hero.querySelector(".hero-bg img");
-  var glow = hero.querySelector(".hero-glow");
-  var chase = document.getElementById("chase");
-  var toggle = document.getElementById("lightSwitch");
-  var toggleLabel = document.getElementById("lightSwitchLabel");
-  var isLit = false;
-
-  function setToggle(on){
-    isLit = on;
-    toggle.setAttribute("aria-pressed", on ? "true" : "false");
-    toggle.classList.toggle("on", on);
-    toggleLabel.textContent = on ? "Lights on \u00b7 16 million colors" : "Tap to light it up";
-  }
-  function chaseSweep(){
-    if(!hasGsap || !chase) return;
-    var w = hero.offsetWidth;
-    gsap.timeline()
-      .set(chase, {x: -160, opacity: 0})
-      .to(chase, {opacity: 1, duration: 0.25, ease: "power1.out"}, 0)
-      .to(chase, {x: w + 160, duration: 1.05, ease: "power1.inOut"}, 0)
-      .to(chase, {opacity: 0, duration: 0.3, ease: "power1.in"}, "-=0.35");
-  }
-  function lightsOn(){
-    if(hasGsap){
-      gsap.timeline()
-        .to(heroImg, {filter: "brightness(1) saturate(1)", duration: 1.2, ease: "power2.out"}, 0)
-        .to(glow, {opacity: 1, duration: 1.2, ease: "power2.out"}, 0)
-        .add(chaseSweep, 0.15);
-    }
-    hero.classList.remove("dim");
-    hero.classList.add("lit");
-    setToggle(true);
-  }
-  function lightsOff(){
-    if(hasGsap){
-      gsap.timeline()
-        .to(heroImg, {filter: "brightness(0.34) saturate(0.55)", duration: 0.9, ease: "power2.inOut"}, 0)
-        .to(glow, {opacity: 0, duration: 0.9, ease: "power2.inOut"}, 0);
-    }
-    hero.classList.add("dim");
-    hero.classList.remove("lit");
-    setToggle(false);
-  }
-  if(!reduceMotion && hasGsap){
-    hero.classList.add("dim", "has-switch");
-    hero.classList.add("gsap"); // CSS transitions off; GSAP drives the animation
-    toggle.hidden = false;
-    toggle.addEventListener("click", function(){ isLit ? lightsOff() : lightsOn(); });
-  }
 
   // Estimate calculator
   var ft = document.getElementById("ft");
