@@ -145,7 +145,8 @@
   .ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     width:44px;height:44px;border-radius:50%;background:#fff;color:#0b1120;
     display:grid;place-items:center;font-size:18px;font-weight:700}
-  .ba-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:ew-resize}
+  .ba-range{position:absolute;inset:0;width:100%;height:auto;opacity:0;margin:0;pointer-events:none}
+  .ba{touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:ew-resize}
   .ba-range:focus-visible+.ba-handle .ba-knob{outline:3px solid var(--amber);outline-offset:2px}
   .ba-tags{position:absolute;top:12px;left:0;right:0;display:flex;justify-content:space-between;
     padding:0 14px;pointer-events:none}
@@ -196,11 +197,6 @@
   #quote .orb{width:460px;height:460px;right:-150px;top:10%;animation-duration:28s}
   @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(46px,-34px) scale(1.14)}}
 
-  /* cursor spotlight (JS-created, fine pointers only) */
-  .spot{position:fixed;left:0;top:0;width:340px;height:340px;border-radius:50%;
-    pointer-events:none;z-index:30;mix-blend-mode:screen;opacity:.55;
-    background:radial-gradient(circle,rgba(255,236,200,.10) 0%,transparent 62%);
-    transition:opacity .3s}
 
   /* steps (Wix steal: tinted numbered card) */
   .steps{display:grid;gap:14px}
@@ -805,12 +801,31 @@
     });
   });
 
-  // Before/after lights slider
+  // Before/after lights slider (container-driven: the range input is keyboard-only)
   var ba = document.getElementById("ba");
   if(ba){
     var baRange = ba.querySelector(".ba-range");
     var setBa = function(){ ba.style.setProperty("--pos", baRange.value + "%"); };
+    var setFromX = function(clientX){
+      var r = ba.getBoundingClientRect();
+      var pct = (clientX - r.left) / r.width * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      baRange.value = Math.round(pct);
+      setBa();
+    };
     baRange.addEventListener("input", setBa);
+    var baDrag = false;
+    ba.addEventListener("pointerdown", function(e){
+      baDrag = true;
+      try{ ba.setPointerCapture(e.pointerId); }catch(_){}
+      setFromX(e.clientX);
+    });
+    ba.addEventListener("pointermove", function(e){
+      if(baDrag){ setFromX(e.clientX); }
+    });
+    var baStop = function(){ baDrag = false; };
+    ba.addEventListener("pointerup", baStop);
+    ba.addEventListener("pointercancel", baStop);
     setBa();
   }
 
@@ -855,29 +870,6 @@
       fig.addEventListener("mouseleave", function(){
         fig.style.transform = ""; fig.style.willChange = "";
       });
-    });
-  }
-
-  // Cursor spotlight (fine pointers only; follows with a soft lerp)
-  if(fine && !reduceMotion){
-    var spot = document.createElement("div");
-    spot.className = "spot";
-    spot.setAttribute("aria-hidden", "true");
-    document.body.appendChild(spot);
-    var sx = -500, sy = -500, tx = -500, ty = -500, spotRaf = null;
-    var moveSpot = function(){
-      sx += (tx - sx) * 0.14; sy += (ty - sy) * 0.14;
-      spot.style.transform = "translate3d(" + Math.round(sx - 170) + "px," + Math.round(sy - 170) + "px,0)";
-      if(Math.abs(tx - sx) > 0.4 || Math.abs(ty - sy) > 0.4){ spotRaf = requestAnimationFrame(moveSpot); }
-      else { spotRaf = null; }
-    };
-    document.addEventListener("mousemove", function(e){
-      tx = e.clientX; ty = e.clientY;
-      spot.style.opacity = "";
-      if(!spotRaf){ spotRaf = requestAnimationFrame(moveSpot); }
-    }, {passive: true});
-    document.addEventListener("mouseout", function(e){
-      if(!e.relatedTarget){ spot.style.opacity = "0"; }
     });
   }
 
