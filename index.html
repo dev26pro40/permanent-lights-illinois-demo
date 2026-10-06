@@ -14,6 +14,10 @@
     --ink:#f2f5fa; --muted:#9aa6bb; --faint:#8b9bb5; --line:#1e2a44;
     --amber:#f2b23e; --amber-d:#c98f22; --amber-soft:rgba(242,178,62,.12);
   }
+  /* palette-picker glow colors: registered so they transition smoothly */
+  @property --glow1{syntax:"<color>";inherits:true;initial-value:#ffd696}
+  @property --glow2{syntax:"<color>";inherits:true;initial-value:#f2b23e}
+  html{transition:--glow1 .6s ease,--glow2 .6s ease}
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;color-scheme:dark}
   button,a,input,select,summary{touch-action:manipulation}
@@ -27,12 +31,10 @@
   .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
   section[id]{scroll-margin-top:64px}
 
-  /* reveal on scroll (content visible by default; JS only adds motion) */
-  .rv{opacity:0;transform:translateY(22px);
+  /* reveal on scroll (visible without JS; .js gates the hidden initial state) */
+  .js .rv{opacity:0;transform:translateY(22px);
     transition:opacity .85s cubic-bezier(.22,.61,.36,1),transform .85s cubic-bezier(.22,.61,.36,1)}
-  .rv.in{opacity:1;transform:none}
-  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}
-    .scroll-cue::after{animation:none}}
+  .js .rv.in{opacity:1;transform:none}
 
   /* sticky nav */
   .nav{position:sticky;top:0;z-index:50;background:rgba(7,11,22,.92);
@@ -61,8 +63,23 @@
   /* hero */
   .hero{position:relative;min-height:94svh;display:flex;align-items:flex-end;
     background:#05070d}
-  .hero-bg{position:absolute;inset:0}
+  .hero-bg{position:absolute;left:0;right:0;top:-12%;height:112%}
   .hero-bg img{width:100%;height:100%;object-fit:cover}
+  .hero-glow{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;
+    opacity:.4;background:radial-gradient(65% 50% at 50% 62%,var(--glow1) 0%,transparent 70%)}
+  .tw{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .tw i{position:absolute;border-radius:50%;
+    background:radial-gradient(circle,var(--glow1) 0%,transparent 70%);
+    animation:tw 4.2s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.12;transform:scale(.7)}50%{opacity:.75;transform:scale(1.12)}}
+  .tw i:nth-child(1){left:14%;top:56%;width:12px;height:12px;animation-delay:-.4s;animation-duration:3.6s}
+  .tw i:nth-child(2){left:30%;top:48%;width:8px;height:8px;animation-delay:-1.8s;animation-duration:4.8s}
+  .tw i:nth-child(3){left:46%;top:58%;width:14px;height:14px;animation-delay:-2.6s;animation-duration:3.2s}
+  .tw i:nth-child(4){left:60%;top:50%;width:9px;height:9px;animation-delay:-.9s;animation-duration:5.1s}
+  .tw i:nth-child(5){left:74%;top:60%;width:12px;height:12px;animation-delay:-3.3s;animation-duration:3.9s}
+  .tw i:nth-child(6){left:86%;top:52%;width:8px;height:8px;animation-delay:-2.1s;animation-duration:4.4s}
+  .tw i:nth-child(7){left:38%;top:66%;width:7px;height:7px;animation-delay:-1.2s;animation-duration:5.6s}
+  .tw i:nth-child(8){left:66%;top:68%;width:10px;height:10px;animation-delay:-2.9s;animation-duration:3.4s}
   .hero-bg::after{content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(5,7,13,.35) 0%,rgba(5,7,13,.05) 35%,rgba(7,11,22,.97) 94%)}
   .hero-inner{position:relative;z-index:2;padding-bottom:96px;width:100%}
@@ -75,6 +92,19 @@
   .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap}
   .ghost{border:1px solid #3a4a6e;color:var(--ink);background:rgba(10,15,30,.4)}
   .hero-micro{margin-top:16px;font-size:13px;color:var(--muted)}
+  /* palette picker (JS-gated: hidden until JS adds .js) */
+  .pal{display:none;gap:8px;flex-wrap:wrap;margin-top:22px;align-items:center;
+    position:relative;z-index:2}
+  .js .pal{display:flex}
+  .pal-label{font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
+    margin-right:2px}
+  .pal button{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);
+    background:rgba(10,15,30,.55);color:var(--ink);border-radius:999px;padding:13px 18px;
+    font-size:13px;font-weight:600;cursor:pointer;transition:border-color .2s,background .2s;
+    min-height:44px}
+  .pal .dot{width:14px;height:14px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--c1,#ffd696),var(--c2,#f2b23e))}
+  .pal button[aria-pressed="true"]{border-color:var(--amber);background:rgba(242,178,62,.14)}
   .scroll-cue{position:absolute;left:50%;bottom:86px;transform:translateX(-50%);z-index:2;
     color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;
     display:none;flex-direction:column;align-items:center;gap:6px;opacity:.7;
@@ -99,6 +129,15 @@
   .proof-item b{display:block;font-size:15px;color:var(--ink);font-weight:700}
   .proof-item span{font-size:13px;color:var(--muted);line-height:1.45}
 
+  /* occasions marquee */
+  .marq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--bg2);overflow:hidden;padding:13px 0}
+  .marq-track{display:flex;width:max-content;animation:marq 32s linear infinite}
+  .marq:hover .marq-track,.marq:focus-within .marq-track{animation-play-state:paused}
+  .marq-track>span{white-space:nowrap;font-size:15px;color:var(--muted);padding-right:8px}
+  .marq-track i{font-style:normal;color:var(--glow2);padding:0 10px}
+  @keyframes marq{to{transform:translateX(-50%)}}
+
   section{padding:76px 0}
   .sec-kicker{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:2.5px;
     text-transform:uppercase;margin-bottom:10px}
@@ -106,13 +145,34 @@
     text-wrap:balance}
   .lede{color:var(--muted);font-size:17px;max-width:56ch;margin-bottom:30px}
 
+  /* before/after lights slider */
+  .ba{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);
+    aspect-ratio:4/3;background:var(--card);--pos:50%;margin-bottom:12px}
+  .ba>img,.ba-before img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .ba-before{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+  .ba-before img{filter:brightness(.22) saturate(.65)}
+  .ba-before::after{content:"";position:absolute;inset:0;background:rgba(4,6,12,.5)}
+  .ba-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;
+    background:rgba(255,255,255,.9);box-shadow:0 0 14px rgba(0,0,0,.55);pointer-events:none}
+  .ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:44px;height:44px;border-radius:50%;background:#fff;color:#0b1120;
+    display:grid;place-items:center;font-size:18px;font-weight:700}
+  .ba-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:ew-resize}
+  .ba-range:focus-visible+.ba-handle .ba-knob{outline:3px solid var(--amber);outline-offset:2px}
+  .ba-tags{position:absolute;top:12px;left:0;right:0;display:flex;justify-content:space-between;
+    padding:0 14px;pointer-events:none}
+  .ba-tags span{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    background:rgba(5,7,13,.6);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .ba-cap{font-size:13px;color:var(--muted);margin:0 0 26px}
+
   /* gallery (Hearst steal: the scroll is the tour) */
   .gal{display:grid;gap:14px;grid-auto-flow:column;grid-auto-columns:84%;
     overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;
     scrollbar-width:none}
   .gal::-webkit-scrollbar{display:none}
   .gal figure{scroll-snap-align:start;border-radius:16px;overflow:hidden;
-    border:1px solid var(--line);background:var(--card);cursor:zoom-in}
+    border:1px solid var(--line);background:var(--card);cursor:zoom-in;
+    transition:transform .18s ease-out}
   .gal img{aspect-ratio:4/3;object-fit:cover;width:100%;height:auto}
   .gal figcaption{padding:12px 16px}
   .gal figcaption b{display:block;font-size:15px}
@@ -136,6 +196,23 @@
   .lb figcaption{margin-top:12px;color:var(--muted);font-size:14px}
   .lb-close{position:absolute;top:16px;right:20px;background:none;border:1px solid var(--line);
     color:var(--ink);font-size:20px;width:44px;height:44px;border-radius:50%;cursor:pointer}
+
+  /* ambient glow orbs (tinted by the palette picker) */
+  #gallery,#estimate,#quote{position:relative;overflow:hidden}
+  #gallery .wrap,#estimate .wrap,#quote .wrap{position:relative;z-index:1}
+  .orb{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0;
+    background:radial-gradient(circle,var(--glow2) 0%,transparent 70%);opacity:.32;
+    animation:drift 24s ease-in-out infinite alternate}
+  #gallery .orb{width:440px;height:440px;right:-140px;top:-100px}
+  #estimate .orb{width:380px;height:380px;left:-130px;bottom:-90px;animation-duration:19s}
+  #quote .orb{width:460px;height:460px;right:-150px;top:10%;animation-duration:28s}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(46px,-34px) scale(1.14)}}
+
+  /* cursor spotlight (JS-created, fine pointers only) */
+  .spot{position:fixed;left:0;top:0;width:340px;height:340px;border-radius:50%;
+    pointer-events:none;z-index:30;mix-blend-mode:screen;opacity:.55;
+    background:radial-gradient(circle,rgba(255,236,200,.10) 0%,transparent 62%);
+    transition:opacity .3s}
 
   /* steps (Wix steal: tinted numbered card) */
   .steps{display:grid;gap:14px}
@@ -236,7 +313,19 @@
     h2{font-size:38px}
     .sticky-cta{display:none}
     footer{padding-bottom:40px}
-    .scroll-cue{display:flex}
+    .scroll-cue{display:flex;bottom:26px}
+  }
+
+  /* reduced motion: kill ALL effects (placed last so these overrides win) */
+  @media(prefers-reduced-motion:reduce){
+    .js .rv,.rv{opacity:1;transform:none;transition:none}
+    .scroll-cue::after{animation:none}
+    .tw{display:none}
+    .hero-glow{opacity:.25}
+    .orb{animation:none;opacity:.22}
+    .marq-track{animation:none;flex-wrap:wrap;width:auto}
+    .marq-dup{display:none}
+    html{transition:none}
   }
 </style>
 </head>
@@ -265,6 +354,8 @@
          alt="Home with permanent LED roofline lighting glowing at night" fetchpriority="high"
          width="1600" height="1149">
   </div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="tw" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="wrap hero-inner">
     <div class="kicker">Macomb, IL and 60 miles in every direction</div>
     <h1>Your Christmas lights, up all year.</h1>
@@ -274,9 +365,24 @@
       <a class="btn ghost" href="#estimate">See what it costs</a>
     </div>
     <p class="hero-micro">Free quotes. No pressure. Most homes done in one day.</p>
+    <div class="pal" role="group" aria-label="Preview a light palette">
+      <span class="pal-label" aria-hidden="true">Preview a palette</span>
+      <button type="button" aria-pressed="true" data-g1="#ffd696" data-g2="#f2b23e"><span class="dot" style="--c1:#ffd696;--c2:#f2b23e" aria-hidden="true"></span>Warm white</button>
+      <button type="button" aria-pressed="false" data-g1="#ff6b6b" data-g2="#35d07f"><span class="dot" style="--c1:#ff6b6b;--c2:#35d07f" aria-hidden="true"></span>Christmas</button>
+      <button type="button" aria-pressed="false" data-g1="#ff8a2a" data-g2="#a04dff"><span class="dot" style="--c1:#ff8a2a;--c2:#a04dff" aria-hidden="true"></span>Halloween</button>
+      <button type="button" aria-pressed="false" data-g1="#ff5a6e" data-g2="#4d8dff"><span class="dot" style="--c1:#ff5a6e;--c2:#4d8dff" aria-hidden="true"></span>4th of July</button>
+      <button type="button" aria-pressed="false" data-g1="#f2b23e" data-g2="#ff7a1a"><span class="dot" style="--c1:#f2b23e;--c2:#ff7a1a" aria-hidden="true"></span>Game day</button>
+    </div>
   </div>
   <div class="scroll-cue" aria-hidden="true">Scroll</div>
 </header>
+
+<div class="marq" aria-label="One install, every occasion">
+  <div class="marq-track">
+    <span>Christmas <i>·</i> Halloween <i>·</i> Game day <i>·</i> 4th of July <i>·</i> Birthdays <i>·</i> Anniversaries <i>·</i> Every single night <i>·</i>&nbsp;</span>
+    <span class="marq-dup" aria-hidden="true">Christmas <i>·</i> Halloween <i>·</i> Game day <i>·</i> 4th of July <i>·</i> Birthdays <i>·</i> Anniversaries <i>·</i> Every single night <i>·</i>&nbsp;</span>
+  </div>
+</div>
 
 <main id="main">
 <div class="proof">
@@ -301,10 +407,25 @@
 </div>
 
 <section id="gallery">
+  <span class="orb" aria-hidden="true"></span>
   <div class="wrap">
     <div class="sec-kicker rv">The work</div>
     <h2 class="rv">Night does the selling.</h2>
     <p class="lede rv">One install, every holiday. Game day, Christmas, the Fourth, or just a warm white glow every evening. Tap any photo to look closer.</p>
+    <div class="ba rv" id="ba">
+      <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-house-lit.jpg"
+           alt="Sample install with permanent roofline lights glowing at night" loading="lazy"
+           width="1600" height="1149">
+      <div class="ba-before" aria-hidden="true">
+        <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-house-lit.jpg"
+             alt="" loading="lazy" width="1600" height="1149">
+      </div>
+      <input type="range" class="ba-range" min="0" max="100" value="50"
+             aria-label="Drag to compare lights off and lights on">
+      <div class="ba-handle" aria-hidden="true"><span class="ba-knob">&#8596;</span></div>
+      <div class="ba-tags" aria-hidden="true"><span>Off</span><span>On</span></div>
+    </div>
+    <p class="ba-cap rv">Drag to see the difference. Sample install.</p>
     <div class="gal" id="gal">
       <figure data-cap="Full roofline, glowing at night">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-house-lit.jpg"
@@ -372,6 +493,7 @@
 </section>
 
 <section id="estimate">
+  <span class="orb" aria-hidden="true"></span>
   <div class="wrap">
     <div class="sec-kicker rv">Estimate</div>
     <h2 class="rv">What will it run?</h2>
@@ -386,7 +508,7 @@
       <div class="calc-result">Your rough estimate<strong id="est">$3,750 – $5,250</strong></div>
       <div class="calc-insight"><b>Most homes land between $25 and $35 per foot.</b> A typical 150 ft home runs a few thousand dollars, installed in a day.</div>
       <p class="calc-fine">Rough estimate only. Your free quote is exact, measured on your roof.</p>
-      <p class="calc-compare">Ten years of paying $300 a year to hang lights is $3,000, gone. This stays on your house.</p>
+      <p class="calc-compare">Ten years of paying $300 a year to hang lights is <span data-countup="3000" data-prefix="$">$3,000</span>, gone. This stays on your house.</p>
       <a class="btn" href="#quote">Get my exact quote</a>
     </div>
   </div>
@@ -465,6 +587,7 @@
 </section>
 
 <section id="quote" style="background:var(--bg2);border-top:1px solid var(--line)">
+  <span class="orb" aria-hidden="true"></span>
   <div class="wrap">
     <div class="sec-kicker rv">Free quote</div>
     <h2 class="rv">Get your exact price.</h2>
@@ -527,6 +650,8 @@
   <a class="btn" href="#quote">Get my free quote</a>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
 (function(){
@@ -534,13 +659,29 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // No-JS flag: CSS-gated widgets (palette picker) stay hidden without JS.
+  document.documentElement.classList.add("js");
+
   // Lenis smooth scroll (subtle). Skipped under reduced motion or if CDN failed.
   var lenis = null;
+  var hasGsap = (typeof gsap !== "undefined") && (typeof ScrollTrigger !== "undefined");
   if(typeof Lenis !== "undefined" && !reduceMotion){
     lenis = new Lenis({lerp: 0.1, smoothWheel: true});
     document.documentElement.classList.add("lenis", "lenis-smooth");
-    var rafLenis = function(t){ lenis.raf(t); requestAnimationFrame(rafLenis); };
-    requestAnimationFrame(rafLenis);
+    if(hasGsap){
+      gsap.registerPlugin(ScrollTrigger);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      var rafLenis = function(t){ lenis.raf(t); requestAnimationFrame(rafLenis); };
+      requestAnimationFrame(rafLenis);
+    }
+  }
+  // Subtle hero parallax (GSAP only; skipped under reduced motion or CDN fail)
+  if(hasGsap && !reduceMotion){
+    gsap.to(".hero-bg", {yPercent: 12, ease: "none",
+      scrollTrigger: {trigger: ".hero", start: "top top", end: "bottom top", scrub: true}});
   }
   function smoothTo(el, offset){
     if(!el) return;
@@ -559,18 +700,37 @@
     });
   });
 
-  // Estimate calculator
+  // Estimate calculator (result counts up between values; instant under reduced motion)
   var ft = document.getElementById("ft");
   var ftOut = document.getElementById("ftOut");
   var est = document.getElementById("est");
   function fmt(n){ return "$" + n.toLocaleString("en-US"); }
-  function update(){
+  var curLo = 150 * 25, curHi = 150 * 35, estRaf = null;
+  function setEst(lo, hi){
+    est.textContent = fmt(Math.round(lo)) + " \u2013 " + fmt(Math.round(hi));
+  }
+  function update(animate){
     var v = parseInt(ft.value, 10);
     ftOut.textContent = v + " ft";
-    est.textContent = fmt(v * 25) + " \u2013 " + fmt(v * 35);
+    var lo = v * 25, hi = v * 35;
+    if(estRaf){ cancelAnimationFrame(estRaf); estRaf = null; }
+    if(animate && !reduceMotion){
+      var sLo = curLo, sHi = curHi, t0 = null;
+      var step = function(t){
+        if(t0 === null){ t0 = t; }
+        var p = Math.min(1, (t - t0) / 420), e = 1 - Math.pow(1 - p, 3);
+        curLo = sLo + (lo - sLo) * e; curHi = sHi + (hi - sHi) * e;
+        setEst(curLo, curHi);
+        if(p < 1){ estRaf = requestAnimationFrame(step); }
+        else { curLo = lo; curHi = hi; setEst(lo, hi); }
+      };
+      estRaf = requestAnimationFrame(step);
+    } else {
+      curLo = lo; curHi = hi; setEst(lo, hi);
+    }
   }
-  ft.addEventListener("input", update);
-  update();
+  ft.addEventListener("input", function(){ update(true); });
+  update(false);
 
   // Gallery dots (mobile swipe position)
   var gal = document.getElementById("gal");
@@ -646,6 +806,94 @@
     confirm.style.display = "block";
     smoothTo(confirm, -120);
   });
+
+  // Holiday palette picker: retints the ambient glows (CSS vars transition ~600ms)
+  var palBtns = document.querySelectorAll(".pal button");
+  palBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      palBtns.forEach(function(x){ x.setAttribute("aria-pressed", "false"); });
+      b.setAttribute("aria-pressed", "true");
+      var root = document.documentElement.style;
+      root.setProperty("--glow1", b.getAttribute("data-g1"));
+      root.setProperty("--glow2", b.getAttribute("data-g2"));
+    });
+  });
+
+  // Before/after lights slider
+  var ba = document.getElementById("ba");
+  if(ba){
+    var baRange = ba.querySelector(".ba-range");
+    var setBa = function(){ ba.style.setProperty("--pos", baRange.value + "%"); };
+    baRange.addEventListener("input", setBa);
+    setBa();
+  }
+
+  // Count-up numbers on scroll into view (instant under reduced motion)
+  function countUp(el){
+    var target = parseInt(el.getAttribute("data-countup"), 10) || 0;
+    var pre = el.getAttribute("data-prefix") || "";
+    var render = function(n){ el.textContent = pre + Math.round(n).toLocaleString("en-US"); };
+    if(reduceMotion || !("IntersectionObserver" in window)){ render(target); return; }
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting){ return; }
+        cio.unobserve(el);
+        var t0 = null;
+        var step = function(t){
+          if(t0 === null){ t0 = t; }
+          var p = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - p, 3);
+          render(target * e);
+          if(p < 1){ requestAnimationFrame(step); } else { render(target); }
+        };
+        requestAnimationFrame(step);
+      });
+    }, {threshold: 0.4});
+    cio.observe(el);
+  }
+  document.querySelectorAll("[data-countup]").forEach(countUp);
+
+  var fine = window.matchMedia("(pointer:fine)").matches;
+
+  // 3D tilt on gallery cards (hover devices only; off while lightbox is open)
+  if(fine && !reduceMotion){
+    figs.forEach(function(fig){
+      fig.addEventListener("mouseenter", function(){ fig.style.willChange = "transform"; });
+      fig.addEventListener("mousemove", function(e){
+        if(lb.classList.contains("open")){ return; }
+        var r = fig.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        fig.style.transform = "perspective(700px) rotateX(" + (-py * 6).toFixed(2) +
+          "deg) rotateY(" + (px * 6).toFixed(2) + "deg)";
+      });
+      fig.addEventListener("mouseleave", function(){
+        fig.style.transform = ""; fig.style.willChange = "";
+      });
+    });
+  }
+
+  // Cursor spotlight (fine pointers only; follows with a soft lerp)
+  if(fine && !reduceMotion){
+    var spot = document.createElement("div");
+    spot.className = "spot";
+    spot.setAttribute("aria-hidden", "true");
+    document.body.appendChild(spot);
+    var sx = -500, sy = -500, tx = -500, ty = -500, spotRaf = null;
+    var moveSpot = function(){
+      sx += (tx - sx) * 0.14; sy += (ty - sy) * 0.14;
+      spot.style.transform = "translate3d(" + Math.round(sx - 170) + "px," + Math.round(sy - 170) + "px,0)";
+      if(Math.abs(tx - sx) > 0.4 || Math.abs(ty - sy) > 0.4){ spotRaf = requestAnimationFrame(moveSpot); }
+      else { spotRaf = null; }
+    };
+    document.addEventListener("mousemove", function(e){
+      tx = e.clientX; ty = e.clientY;
+      spot.style.opacity = "";
+      if(!spotRaf){ spotRaf = requestAnimationFrame(moveSpot); }
+    }, {passive: true});
+    document.addEventListener("mouseout", function(e){
+      if(!e.relatedTarget){ spot.style.opacity = "0"; }
+    });
+  }
 
   // Gentle reveal on scroll (with timed fallback so content can never stay hidden)
   var revealed = function(){
