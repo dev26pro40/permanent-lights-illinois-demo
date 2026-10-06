@@ -5,14 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Permanent Christmas Lights, Macomb IL | Permanent Lights Illinois</title>
 <meta name="description" content="Permanent Christmas lights in Macomb, Illinois and 60 miles in every direction. A permanent lighting system, invisible by day, app-controlled at night. Free quotes.">
+<meta name="theme-color" content="#070b16">
+<link rel="preconnect" href="https://ironpeaklighting.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <style>
   :root{
     --bg:#070b16; --bg2:#0b1120; --card:#101828; --card2:#0d1424;
-    --ink:#f2f5fa; --muted:#9aa6bb; --line:#1e2a44;
+    --ink:#f2f5fa; --muted:#9aa6bb; --faint:#8b9bb5; --line:#1e2a44;
     --amber:#f2b23e; --amber-d:#c98f22; --amber-soft:rgba(242,178,62,.12);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;color-scheme:dark}
+  button,a,input,select,summary{touch-action:manipulation}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg); color:var(--ink); line-height:1.6;
@@ -27,7 +31,8 @@
   .rv{opacity:0;transform:translateY(22px);
     transition:opacity .85s cubic-bezier(.22,.61,.36,1),transform .85s cubic-bezier(.22,.61,.36,1)}
   .rv.in{opacity:1;transform:none}
-  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}
+    .scroll-cue::after{animation:none}}
 
   /* sticky nav */
   .nav{position:sticky;top:0;z-index:50;background:rgba(7,11,22,.92);
@@ -46,8 +51,12 @@
   .btn:hover{background:var(--amber-d)}
   .btn:active{transform:scale(.98)}
   .btn-nav{padding:10px 18px;font-size:15px}
-  .btn:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{
+  .btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{
     outline:2px solid var(--amber);outline-offset:2px}
+  .skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--amber);
+    color:#1a1206;font-weight:700;padding:10px 16px;border-radius:10px;
+    text-decoration:none;transition:top .15s}
+  .skip:focus-visible{top:12px}
 
   /* hero */
   .hero{position:relative;min-height:94svh;display:flex;align-items:flex-end;
@@ -61,7 +70,7 @@
     text-transform:uppercase;margin-bottom:14px;text-wrap:balance;
     text-shadow:0 1px 10px rgba(0,0,0,.65),0 0 2px rgba(0,0,0,.8)}
   .hero h1{font-size:42px;line-height:1.1;letter-spacing:-.8px;max-width:13ch;
-    margin-bottom:14px}
+    margin-bottom:14px;text-wrap:balance}
   .hero p.sub{color:#d5dbe7;font-size:18px;max-width:34ch;margin-bottom:26px}
   .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap}
   .ghost{border:1px solid #3a4a6e;color:var(--ink);background:rgba(10,15,30,.4)}
@@ -93,7 +102,8 @@
   section{padding:76px 0}
   .sec-kicker{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:2.5px;
     text-transform:uppercase;margin-bottom:10px}
-  h2{font-size:31px;line-height:1.18;letter-spacing:-.5px;margin-bottom:12px}
+  h2{font-size:31px;line-height:1.18;letter-spacing:-.5px;margin-bottom:12px;
+    text-wrap:balance}
   .lede{color:var(--muted);font-size:17px;max-width:56ch;margin-bottom:30px}
 
   /* gallery (Hearst steal: the scroll is the tour) */
@@ -103,15 +113,17 @@
   .gal::-webkit-scrollbar{display:none}
   .gal figure{scroll-snap-align:start;border-radius:16px;overflow:hidden;
     border:1px solid var(--line);background:var(--card);cursor:zoom-in}
-  .gal img{aspect-ratio:4/3;object-fit:cover;width:100%}
+  .gal img{aspect-ratio:4/3;object-fit:cover;width:100%;height:auto}
   .gal figcaption{padding:12px 16px}
   .gal figcaption b{display:block;font-size:15px}
   .gal figcaption span{font-size:13px;color:var(--muted)}
-  .gal-dots{display:flex;gap:8px;justify-content:center;margin-top:14px}
-  .gal-dots button{width:8px;height:8px;border-radius:50%;border:0;background:#2a3a5e;
-    cursor:pointer;padding:0;transition:background .2s}
-  .gal-dots button.on{background:var(--amber)}
-  .swipe-hint{text-align:center;font-size:12px;color:#5d6b87;margin-top:8px;
+  .gal-dots{display:flex;gap:2px;justify-content:center;margin-top:8px}
+  .gal-dots button{width:44px;height:44px;display:grid;place-items:center;
+    border:0;background:none;cursor:pointer;padding:0}
+  .gal-dots button::before{content:"";width:8px;height:8px;border-radius:50%;
+    background:#2a3a5e;transition:background .2s}
+  .gal-dots button.on::before{background:var(--amber)}
+  .swipe-hint{text-align:center;font-size:12px;color:var(--faint);margin-top:8px;
     letter-spacing:1px;text-transform:uppercase}
   .gal-note{font-size:13px;color:var(--muted);margin-top:14px}
 
@@ -146,11 +158,11 @@
   .calc output{display:block;font-size:14px;color:var(--muted);margin-bottom:10px}
   .slider-wrap{position:relative;padding-bottom:22px}
   input[type=range]{width:100%;accent-color:var(--amber);height:34px;cursor:pointer}
-  .ticks{display:flex;justify-content:space-between;font-size:12px;color:#5d6b87;
+  .ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--faint);
     margin-top:2px}
   .calc-result{font-size:15px;color:var(--muted);margin:14px 0 4px}
-  .calc-result strong{display:block;font-size:44px;font-weight:800;letter-spacing:-1px;
-    color:var(--ink);line-height:1.15}
+  .calc-result strong{display:block;font-size:clamp(32px,10.5vw,44px);font-weight:800;
+    letter-spacing:-1px;color:var(--ink);line-height:1.15;white-space:nowrap}
   .calc-insight{background:var(--amber-soft);border:1px solid rgba(242,178,62,.28);
     border-radius:12px;padding:14px 16px;font-size:14px;color:#e8d9b8;margin:14px 0 4px}
   .calc-insight b{color:var(--amber)}
@@ -183,7 +195,9 @@
   .field input:focus,.field select:focus{outline:2px solid var(--amber);border-color:var(--amber)}
   .form-card .btn{width:100%;margin-top:8px}
   .form-sub{font-size:13px;color:var(--muted);margin-top:12px;text-align:center}
-  .form-note{font-size:12px;color:#5d6b87;margin-top:10px;text-align:center}
+  .form-note{font-size:12px;color:var(--faint);margin-top:10px;text-align:center}
+  .form-error{display:none;background:rgba(255,110,110,.1);border:1px solid #a33;
+    border-radius:10px;padding:12px 14px;font-size:14px;color:#ffb3b3;margin-bottom:16px}
   .confirm{display:none;text-align:center;padding:24px 0}
   .confirm .ok{width:56px;height:56px;border-radius:50%;background:var(--amber-soft);
     border:1px solid rgba(242,178,62,.4);display:flex;align-items:center;
@@ -196,7 +210,7 @@
   footer{border-top:1px solid var(--line);padding:36px 0 calc(110px + env(safe-area-inset-bottom));
     color:var(--muted);font-size:14px}
   footer .wrap{display:flex;flex-direction:column;gap:8px}
-  footer .demo-tag{font-size:12px;color:#5d6b87}
+  footer .demo-tag{font-size:12px;color:var(--faint)}
   .pd-card{background:#ffffff;border-radius:14px;padding:16px 18px 12px;
     display:inline-block;max-width:250px;margin-top:10px;align-self:flex-start}
   .pd-card img{width:150px;height:auto;display:block;margin:0 auto}
@@ -228,6 +242,8 @@
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to content</a>
+
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Premier Duo LLC — back to top">
@@ -246,7 +262,8 @@
 <header class="hero" id="top">
   <div class="hero-bg">
     <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-house-lit.jpg"
-         alt="Home with permanent LED roofline lighting glowing at night" fetchpriority="high">
+         alt="Home with permanent LED roofline lighting glowing at night" fetchpriority="high"
+         width="1600" height="1149">
   </div>
   <div class="wrap hero-inner">
     <div class="kicker">Macomb, IL and 60 miles in every direction</div>
@@ -261,11 +278,12 @@
   <div class="scroll-cue" aria-hidden="true">Scroll</div>
 </header>
 
+<main id="main">
 <div class="proof">
   <div class="wrap">
     <div class="proof-item">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.5 1 2.5h6c0-1 .2-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>
-      <div><b>IronPeak dealer</b><span>Pro-grade system, installed right</span></div>
+      <div><b>IronPeak dealer</b><span>The IronPeak system, installed right</span></div>
     </div>
     <div class="proof-item">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -290,26 +308,30 @@
     <div class="gal" id="gal">
       <figure data-cap="Full roofline, glowing at night">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-house-lit.jpg"
-             alt="Full home with permanent roofline LED lighting glowing at night" loading="lazy">
+             alt="Full home with permanent roofline LED lighting glowing at night" loading="lazy"
+             width="1600" height="1149">
         <figcaption><b>Full roofline</b><span>Glowing at night</span></figcaption>
       </figure>
       <figure data-cap="Roofline detail at dusk">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-hero-roofline.jpg"
-             alt="Roofline traced in permanent LED light at dusk" loading="lazy">
+             alt="Roofline traced in permanent LED light at dusk" loading="lazy"
+             width="1600" height="900">
         <figcaption><b>Roofline detail</b><span>At dusk</span></figcaption>
       </figure>
       <figure data-cap="Peak install, up close">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-install-1.jpg"
-             alt="Installer fitting permanent LED track on a roof peak" loading="lazy">
+             alt="Installer fitting permanent LED track on a roof peak" loading="lazy"
+             width="1600" height="1200">
         <figcaption><b>Peak install</b><span>Up close</span></figcaption>
       </figure>
       <figure data-cap="Track install along the eave">
         <img src="https://ironpeaklighting.com/cdn/shop/t/53/assets/ip-hq-install-2.jpg"
-             alt="Permanent LED track being installed along the eave" loading="lazy">
+             alt="Permanent LED track being installed along the eave" loading="lazy"
+             width="1412" height="1412">
         <figcaption><b>Track install</b><span>Along the eave</span></figcaption>
       </figure>
     </div>
-    <div class="gal-dots" id="galDots" role="tablist" aria-label="Gallery pages"></div>
+    <div class="gal-dots" id="galDots" role="group" aria-label="Gallery photos"></div>
     <div class="swipe-hint">Swipe</div>
     <p class="gal-note">Sample installs shown. Our own local installs go here as we complete them.</p>
   </div>
@@ -409,7 +431,7 @@
     </details>
     <details class="rv">
       <summary>What if I sell my house?<span class="pm" aria-hidden="true">+</span></summary>
-      <div class="a"><div><p>It stays with the house and transfers through the app. It photographs great for listings and it is a real curb-appeal talking point.</p></div></div>
+      <div class="a"><div><p>It stays with the house and transfers through the app. It photographs great for listings.</p></div></div>
     </details>
     <details class="rv">
       <summary>Can I just buy lights and do it myself?<span class="pm" aria-hidden="true">+</span></summary>
@@ -449,6 +471,7 @@
     <p class="lede rv">Tell us where to reach you. We measure, we quote, you decide.</p>
     <div class="form-card rv">
       <form id="quoteForm" novalidate>
+        <p class="form-error" id="formError" role="alert" tabindex="-1"></p>
         <div class="field">
           <label for="fName">Name</label>
           <input id="fName" name="name" type="text" autocomplete="name" required>
@@ -486,6 +509,7 @@
   </div>
 </section>
 
+</main>
 <footer>
   <div class="wrap">
     <div><strong style="color:var(--ink)">Permanent Lights Illinois</strong></div>
@@ -556,7 +580,6 @@
   figs.forEach(function(fig, i){
     var b = document.createElement("button");
     b.type = "button";
-    b.setAttribute("role", "tab");
     b.setAttribute("aria-label", "Show photo " + (i + 1));
     b.addEventListener("click", function(){
       gal.scrollTo({left: fig.offsetLeft - gal.offsetLeft - 20, behavior: "smooth"});
@@ -605,15 +628,19 @@
   var form = document.getElementById("quoteForm");
   var confirm = document.getElementById("quoteConfirm");
   var confirmText = document.getElementById("confirmText");
+  var formError = document.getElementById("formError");
   form.addEventListener("submit", function(e){
     e.preventDefault();
     var name = document.getElementById("fName").value.trim();
     var phone = document.getElementById("fPhone").value.trim();
     var addr = document.getElementById("fAddr").value.trim();
     if(!name || !phone || !addr){
-      alert("Please fill in your name, phone, and address so we can reach you.");
+      formError.textContent = "Please fill in your name, phone, and address so we can reach you.";
+      formError.style.display = "block";
+      formError.focus();
       return;
     }
+    formError.style.display = "none";
     if(name){ confirmText.textContent = "Thanks, " + name + ". We will be in touch shortly to set up your free quote."; }
     form.style.display = "none";
     confirm.style.display = "block";
