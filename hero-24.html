@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Permanent Christmas Lights, Macomb IL — Hero 24 "Night drive"</title>
+<style>
+/* Palette: asphalt charcoal + headlight warm white. Not the old navy/amber. */
+:root{
+  --ink:#131210;
+  --ink-2:#1c1a17;
+  --paper:#f3eee2;
+  --mut:#b9b2a2;
+  --line:rgba(243,238,226,.18);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{background:var(--ink);color:var(--paper);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;border-bottom:1px solid var(--line);background:var(--ink)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:650;font-size:14.5px;
+  color:var(--paper)}
+.brand img{width:32px;height:32px;border-radius:8px;background:#fff;padding:2px}
+.sample{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);
+  background:rgba(19,18,16,.62);border:1px solid var(--line);padding:7px 13px;border-radius:999px;
+  white-space:nowrap}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.nav-cta{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border-radius:999px;
+  background:var(--paper);color:var(--ink);font-weight:750;font-size:14px;text-decoration:none;white-space:nowrap}
+.nav-cta:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+@media (max-width:899px){ .topbar .sample{display:none} }
+
+/* ============ default: stacked cards (no-JS and reduced-motion) ============ */
+.drive{background:var(--ink)}
+.scene{border-bottom:1px solid var(--line);scroll-margin-top:70px}
+.scene figure{position:relative}
+.scene figure img{width:100%;height:52svh;object-fit:cover}
+.scene .sample{position:absolute;top:14px;right:14px}
+.scene-copy{padding:26px 20px 34px;max-width:640px}
+.kick{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.scene-copy h2{font-size:clamp(2rem,8.5vw,2.9rem);line-height:1.05;letter-spacing:-.015em;
+  font-weight:750;text-wrap:balance}
+.scene-copy p{margin-top:10px;color:var(--mut);font-size:1.02rem;max-width:38ch}
+.dots{display:flex;gap:10px;align-items:center;padding:12px 20px;background:var(--ink);
+  border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.dots a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;
+  text-decoration:none}
+.dots .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--mut);display:block}
+.dots a[aria-current="true"] .dot{background:var(--paper);border-color:var(--paper)}
+.dots .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.closer{padding:56px 20px 60px;text-align:center;max-width:640px;margin:0 auto}
+.closer h2{font-size:clamp(1.7rem,7vw,2.4rem);letter-spacing:-.015em;text-wrap:balance}
+.closer p{margin-top:10px;color:var(--mut)}
+.cta{display:inline-flex;align-items:center;justify-content:center;min-height:56px;
+  margin-top:22px;padding:14px 34px;border-radius:999px;background:var(--paper);color:var(--ink);
+  font-weight:750;font-size:17px;text-decoration:none}
+.cta:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+.cue{display:none}
+.foot{padding:16px 20px 22px;text-align:center;font-size:12.5px;color:var(--mut);
+  border-top:1px solid var(--line)}
+
+/* ============ drive mode: pinned scroll journey (JS, motion OK) ============ */
+html.drive-on .drive{height:340svh;position:relative}
+html.drive-on .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+html.drive-on .topbar{position:absolute;top:0;left:0;right:0;z-index:6;background:transparent;
+  border-bottom:0;text-shadow:0 1px 10px rgba(0,0,0,.8)}
+html.drive-on .scene .sample{top:78px}
+html.drive-on .scene{position:absolute;inset:0;border-bottom:0;opacity:0;visibility:hidden;
+  transition:opacity .7s ease, visibility 0s linear .7s}
+html.drive-on .scene.active{opacity:1;visibility:visible;transition:opacity .7s ease}
+html.drive-on .scene figure,html.drive-on .scene figure img{position:absolute;inset:0;width:100%;height:100%}
+html.drive-on .scene figure img{object-fit:cover}
+html.drive-on .scene::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(19,18,16,.42),rgba(19,18,16,0) 32%,rgba(19,18,16,0) 52%,rgba(19,18,16,.88))}
+html.drive-on .scene-copy{position:absolute;z-index:3;left:0;right:0;bottom:0;padding:0 20px 168px;max-width:720px}
+html.drive-on .scene-copy h2{font-size:clamp(2.6rem,11vw,4.6rem);text-shadow:0 2px 26px rgba(0,0,0,.7)}
+html.drive-on .scene-copy p{text-shadow:0 1px 12px rgba(0,0,0,.8)}
+html.drive-on .scene-copy .kick{text-shadow:0 1px 10px rgba(0,0,0,.8)}
+html.drive-on .dots{position:absolute;z-index:5;top:auto;bottom:0;left:0;right:0;
+  background:transparent;border-bottom:0;padding:14px 20px 22px;
+  display:flex;align-items:center;justify-content:space-between}
+html.drive-on .dots .pins{display:flex;gap:10px}
+html.drive-on .drive-cta{display:inline-flex;align-items:center;justify-content:center;min-height:52px;
+  padding:12px 20px;border-radius:999px;background:var(--paper);color:var(--ink);
+  font-weight:750;font-size:15px;text-decoration:none;white-space:nowrap;flex:none}
+html.drive-on .drive-cta:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+html.drive-on .closer,html.drive-on .cue-wrap{display:none}
+html.drive-on .cue{display:flex;position:absolute;z-index:4;left:50%;bottom:108px;transform:translateX(-50%);
+  flex-direction:column;align-items:center;gap:6px;color:var(--paper);font-size:12px;
+  letter-spacing:.22em;text-transform:uppercase;opacity:.85;animation:cue 2.2s ease-in-out infinite}
+html.drive-on .cue svg{width:18px;height:18px}
+@keyframes cue{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+.drive-cta{display:none}
+
+@media (min-width:900px){
+  .topbar{padding:18px 34px}
+  .scene figure img{height:60svh}
+  .scene-copy{padding:34px 34px 44px}
+  html.drive-on .scene-copy{padding:0 34px 170px}
+  html.drive-on .dots{padding:16px 34px 26px}
+  .dots{padding:12px 34px}
+  html.drive-on .scene-copy h2{font-size:clamp(3.4rem,6vw,5.2rem)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  html.drive-on .scene{transition:none}
+  html.drive-on .cue{animation:none}
+}
+</style>
+</head>
+<body>
+<section class="drive" id="drive" aria-label="Night drive: three houses, three seasons">
+  <div class="stage" id="stage">
+    <div class="topbar">
+      <a class="brand" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/">
+        <img src="assets/premier-duo-monogram.svg" alt="" width="32" height="32">Permanent Lights Illinois</a>
+      <div class="topbar-right">
+        <span class="sample">Demo · Sample installs</span>
+        <a class="nav-cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Free quote</a>
+      </div>
+    </div>
+
+    <article class="scene active" id="scene-1">
+      <figure>
+        <img src="assets/fresh/fp1.jpg" alt="Farmhouse at night with warm white permanent lights along the roofline" fetchpriority="high">
+        <span class="sample">Sample install</span>
+      </figure>
+      <div class="scene-copy">
+        <p class="kick">A drive down the street</p>
+        <h2>Everyday glow.</h2>
+        <p>Warm white, every night. March looks as good as December.</p>
+      </div>
+    </article>
+
+    <article class="scene" id="scene-2">
+      <figure>
+        <img src="assets/fresh/fp4.jpg" alt="House gables lit blue and purple at dusk" loading="lazy">
+        <span class="sample">Sample install</span>
+      </figure>
+      <div class="scene-copy">
+        <p class="kick">A drive down the street</p>
+        <h2>Game day.</h2>
+        <p>Your colors on demand. From kickoff to the final whistle.</p>
+      </div>
+    </article>
+
+    <article class="scene" id="scene-3">
+      <figure>
+        <img src="assets/fresh/fp8.webp" alt="Ranch house lit red, white, and blue at night" loading="lazy">
+        <span class="sample">Sample install</span>
+      </figure>
+      <div class="scene-copy">
+        <p class="kick">A drive down the street</p>
+        <h2>The holidays.</h2>
+        <p>Christmas, Halloween, the 4th of July. One install covers all of it.</p>
+      </div>
+    </article>
+
+    <p class="cue" aria-hidden="true">Scroll
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </p>
+
+    <nav class="dots" aria-label="Scenes">
+      <div class="pins">
+        <a href="#scene-1" data-scene="0" aria-current="true"><span class="dot" aria-hidden="true"></span><span class="lbl">Everyday glow</span></a>
+        <a href="#scene-2" data-scene="1" aria-current="false"><span class="dot" aria-hidden="true"></span><span class="lbl">Game day</span></a>
+        <a href="#scene-3" data-scene="2" aria-current="false"><span class="dot" aria-hidden="true"></span><span class="lbl">The holidays</span></a>
+      </div>
+      <a class="drive-cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get my free quote</a>
+    </nav>
+
+  </div>
+</section>
+
+<div class="closer">
+  <h2>One install. Every season.</h2>
+  <p>The track stays up all year. You change the look from your phone.</p>
+  <a class="cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get my free quote</a>
+</div>
+
+<p class="foot">Hero concept 24 of 10 — "Night drive" — demo only.</p>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return; // stacked cards + anchor nav
+  var drive = document.getElementById('drive');
+  var scenes = Array.prototype.slice.call(drive.querySelectorAll('.scene'));
+  var pins = Array.prototype.slice.call(drive.querySelectorAll('.dots .pins a'));
+  document.documentElement.classList.add('drive-on');
+  var current = -1;
+  function setActive(i){
+    if (i === current) return;
+    current = i;
+    scenes.forEach(function(s, k){ s.classList.toggle('active', k === i); });
+    pins.forEach(function(p, k){ p.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+  }
+  function onScroll(){
+    var start = drive.offsetTop;
+    var total = drive.offsetHeight - window.innerHeight;
+    var p = total > 0 ? (window.scrollY - start) / total : 0;
+    p = Math.min(1, Math.max(0, p));
+    setActive(Math.min(scenes.length - 1, Math.floor(p * scenes.length)));
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if (!ticking){ ticking = true; requestAnimationFrame(function(){ onScroll(); ticking = false; }); }
+  }, {passive:true});
+  pins.forEach(function(pin){
+    pin.addEventListener('click', function(e){
+      e.preventDefault();
+      var i = parseInt(pin.getAttribute('data-scene'), 10);
+      var total = drive.offsetHeight - window.innerHeight;
+      var y = drive.offsetTop + (total * (i + 0.5) / scenes.length);
+      window.scrollTo({top: y, behavior:'smooth'});
+    });
+  });
+  onScroll();
+})();
+</script>
+</body>
+</html>
