@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Your phone is the light switch — Hero 19 "The App, Big"</title>
+<style>
+:root{
+  --paper:#f7f2e7; --ink:#241a0e; --mut:#6e5f49; --line:rgba(36,26,14,.16);
+  --frame:#171310; --chip:#fffdf8; --cta:#241a0e; --cta-txt:#fbf7ec;
+  --warm:#ffb454; --hal:#7c5cd6; --xmas:#c93a4b; --game:#2f6fd6;
+  --radius:26px; --maxw:1120px;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:15px}
+.brand img{width:34px;height:34px;border-radius:8px;background:#fff;padding:2px;border:1px solid var(--line)}
+.nav-cta{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:10px 20px;border-radius:999px;background:var(--cta);color:var(--cta-txt);font-weight:700;font-size:15px;text-decoration:none}
+.hero{padding:18px 0 40px}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);margin-bottom:12px}
+h1{font-size:clamp(2.3rem,9vw,4.2rem);line-height:1.04;letter-spacing:-.02em;text-wrap:balance;max-width:14ch}
+.sub{margin-top:12px;font-size:clamp(1rem,3.8vw,1.2rem);color:var(--mut);max-width:42ch}
+.stage{margin-top:26px;display:grid;gap:26px;justify-items:center}
+@media(min-width:900px){.stage{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;justify-items:stretch}}
+/* ---- phone ---- */
+.phone{width:min(360px,100%);background:var(--frame);border-radius:44px;padding:12px;box-shadow:0 30px 60px -20px rgba(36,26,14,.35),inset 0 0 0 2px rgba(255,255,255,.08)}
+.screen{background:#0e0c09;border-radius:34px;overflow:hidden;color:#f5efe2}
+.app-head{padding:16px 18px 10px;display:flex;align-items:center;justify-content:space-between}
+.app-head .t{font-size:13px;font-weight:700;letter-spacing:.02em}
+.app-head .s{font-size:11.5px;color:#b9ad94}
+.pause{min-height:44px;min-width:44px;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#f5efe2;font-size:13px;font-weight:600;cursor:pointer}
+.photo{position:relative;margin:0 14px;border-radius:18px;overflow:hidden;aspect-ratio:16/10;background:#1c1813}
+.photo img{width:100%;height:100%;object-fit:cover}
+.tint{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;pointer-events:none}
+.tint.warm{background:radial-gradient(120% 90% at 50% 0%,rgba(255,190,110,.55),rgba(255,150,60,.12) 60%,transparent);opacity:1}
+.tint.halloween{background:linear-gradient(160deg,rgba(124,60,220,.62),rgba(124,60,220,.18) 45%,rgba(40,180,90,.34));opacity:0}
+.tint.xmas{background:linear-gradient(115deg,rgba(210,45,60,.55),rgba(210,45,60,.08) 45%,rgba(40,170,90,.42));opacity:0}
+.tint.game{background:linear-gradient(160deg,rgba(47,111,214,.55),rgba(47,111,214,.1) 55%,rgba(214,47,80,.42));opacity:0}
+.screen[data-preset="everyday"] .tint.warm{opacity:1}
+.screen[data-preset="everyday"] .tint.halloween,.screen[data-preset="everyday"] .tint.xmas,.screen[data-preset="everyday"] .tint.game{opacity:0}
+.screen[data-preset="halloween"] .tint.halloween{opacity:1}
+.screen[data-preset="halloween"] .tint.warm,.screen[data-preset="halloween"] .tint.xmas,.screen[data-preset="halloween"] .tint.game{opacity:0}
+.screen[data-preset="christmas"] .tint.xmas{opacity:1}
+.screen[data-preset="christmas"] .tint.warm,.screen[data-preset="christmas"] .tint.halloween,.screen[data-preset="christmas"] .tint.game{opacity:0}
+.screen[data-preset="gameday"] .tint.game{opacity:1}
+.screen[data-preset="gameday"] .tint.warm,.screen[data-preset="gameday"] .tint.halloween,.screen[data-preset="gameday"] .tint.xmas{opacity:0}
+.sim{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.55);padding:5px 10px;border-radius:999px}
+.sample{position:absolute;bottom:10px;left:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.55);padding:5px 10px;border-radius:999px}
+.preset-name{margin:12px 18px 0;font-size:14px;font-weight:700;color:#f5efe2}
+.preset-name small{display:block;font-weight:400;color:#b9ad94;font-size:12.5px}
+.chips{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 14px 18px}
+.chip{display:flex;align-items:center;gap:9px;min-height:48px;padding:8px 12px;border-radius:14px;border:1.5px solid rgba(255,255,255,.16);background:#191512;color:#f5efe2;font-size:13.5px;font-weight:600;cursor:pointer;text-align:left}
+.chip .dot{flex:0 0 auto;width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.5)}
+.chip[data-p="everyday"] .dot{background:var(--warm)}
+.chip[data-p="halloween"] .dot{background:linear-gradient(135deg,#7c5cd6 50%,#3fd67a 50%)}
+.chip[data-p="christmas"] .dot{background:linear-gradient(135deg,#c93a4b 50%,#3fae5a 50%)}
+.chip[data-p="gameday"] .dot{background:linear-gradient(135deg,#2f6fd6 50%,#d62f50 50%)}
+.chip[aria-pressed="true"]{border-color:#fff;background:#211c15;box-shadow:0 0 0 1px #fff inset}
+/* ---- copy column ---- */
+.copycol{max-width:40ch}
+.checkline{margin:14px 0 0;font-size:15px;color:var(--mut);display:flex;gap:10px;align-items:flex-start}
+.checkline .tick{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#2e7d4f;color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
+.cta{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:13px 32px;border-radius:999px;background:var(--cta);color:var(--cta-txt);font-weight:750;font-size:17px;text-decoration:none;margin-top:22px}
+.cta-note{margin-top:10px;font-size:14px;color:var(--mut)}
+.foot{border-top:1px solid var(--line);margin-top:30px;padding:16px 0 22px;text-align:center;font-size:12.5px;color:var(--mut)}
+@media (prefers-reduced-motion:reduce){.tint{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/">
+      <img src="assets/premier-duo-monogram.svg" alt="" width="34" height="34">Permanent Lights Illinois</a>
+    <a class="nav-cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get a free quote</a>
+  </nav>
+  <header class="hero">
+    <p class="kicker">App-controlled permanent lights · Macomb, Illinois</p>
+    <h1>Your phone is the light switch.</h1>
+    <p class="sub">Warm white for every night. Team colors on Friday. Christmas in December. One track, mounted once, under your soffit.</p>
+    <div class="stage">
+      <div class="phone" role="img" aria-label="Phone showing the lighting app switching color presets">
+        <div class="screen" id="screen" data-preset="everyday">
+          <div class="app-head">
+            <div><div class="t">Front yard</div><div class="s">32 lights · online</div></div>
+            <button class="pause" id="pauseBtn" type="button" aria-pressed="false">Pause</button>
+          </div>
+          <div class="photo">
+            <img src="assets/fresh/fp1.jpg" alt="Farmhouse at night with warm white lights, sample install" fetchpriority="high">
+            <div class="tint warm"></div><div class="tint halloween"></div><div class="tint xmas"></div><div class="tint game"></div>
+            <span class="sim">Simulated</span>
+            <span class="sample">Sample install</span>
+          </div>
+          <p class="preset-name" id="presetName" aria-live="polite">Everyday glow<small>Warm white, 2700K. This is the default.</small></p>
+          <div class="chips" role="group" aria-label="Light presets">
+            <button class="chip" type="button" data-p="everyday" aria-pressed="true"><span class="dot" aria-hidden="true"></span>Everyday glow</button>
+            <button class="chip" type="button" data-p="halloween" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Halloween</button>
+            <button class="chip" type="button" data-p="christmas" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Christmas</button>
+            <button class="chip" type="button" data-p="gameday" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Game day</button>
+          </div>
+        </div>
+      </div>
+      <div class="copycol">
+        <p class="checkline"><span class="tick" aria-hidden="true">✓</span><span><strong>We set it up with you on install day.</strong> Your presets, your schedule, on your phone before we leave.</span></p>
+        <p class="checkline"><span class="tick" aria-hidden="true">✓</span><span><strong>Change it in seconds.</strong> No ladder, no staples, no January takedown.</span></p>
+        <p class="checkline"><span class="tick" aria-hidden="true">✓</span><span><strong>One uniform light per spot.</strong> The track hides under the soffit. Invisible by day.</span></p>
+        <a class="cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get my free quote</a>
+        <p class="cta-note">Free quote. We reply within 24 hours.</p>
+      </div>
+    </div>
+  </header>
+  <footer class="foot">Hero concept 19 of 10 — demo only</footer>
+</div>
+<script>
+(function(){
+  var screen=document.getElementById('screen'),
+      name=document.getElementById('presetName'),
+      chips=Array.prototype.slice.call(document.querySelectorAll('.chip')),
+      pauseBtn=document.getElementById('pauseBtn'),
+      reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      order=['everyday','halloween','christmas','gameday'],
+      labels={
+        everyday:'Everyday glow<small>Warm white, 2700K. This is the default.</small>',
+        halloween:'Halloween<small>Purple and green, October only if you want it.</small>',
+        christmas:'Christmas<small>Red and green, on your schedule.</small>',
+        gameday:'Game day<small>Your colors. Your call.</small>'
+      },
+      idx=0, timer=null, paused=false;
+  function set(p){
+    screen.setAttribute('data-preset',p);
+    name.innerHTML=labels[p];
+    chips.forEach(function(c){c.setAttribute('aria-pressed',c.dataset.p===p?'true':'false')});
+    idx=order.indexOf(p);
+  }
+  function cycle(){
+    if(paused||reduce)return;
+    set(order[(idx+1)%order.length]);
+    timer=setTimeout(cycle,5000);
+  }
+  function start(){ clearTimeout(timer); if(!paused&&!reduce) timer=setTimeout(cycle,5000); }
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){ set(c.dataset.p); paused=false; pauseBtn.setAttribute('aria-pressed','false'); pauseBtn.textContent='Pause'; start(); });
+  });
+  pauseBtn.addEventListener('click',function(){
+    paused=!paused;
+    pauseBtn.setAttribute('aria-pressed',String(paused));
+    pauseBtn.textContent=paused?'Play':'Pause';
+    start();
+  });
+  set('everyday'); start();
+})();
+</script>
+</body>
+</html>
