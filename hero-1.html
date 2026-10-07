@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero concept 1 — Permanent Lights Illinois</title>
+<meta name="theme-color" content="#070b16">
+<meta name="description" content="Hero concept 1 of 5: calm aurora sky, huge staggered typography. Demo only.">
+<!-- HERO-1 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://esm.sh">
+<style>
+  :root{
+    --bg:#070b16; --bg2:#0b1120; --card:#101828;
+    --ink:#f2f5fa; --muted:#9aa6bb; --faint:#8b9bb5; --line:#1e2a44;
+    --amber:#f2b23e; --amber-d:#c98f22;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;color-scheme:dark}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  .skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--amber);
+    color:#1a1206;font-weight:700;padding:10px 16px;border-radius:10px;
+    text-decoration:none;transition:top .15s}
+  .skip:focus{top:12px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(7,11,22,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;
+    padding-top:12px;padding-bottom:12px}
+  .brand{display:inline-flex;align-items:center;background:#ffffff;border-radius:10px;
+    padding:5px 7px;line-height:0;text-decoration:none}
+  .brand img{width:38px;height:auto;display:block}
+  .btn{display:inline-block;background:var(--amber);color:#1a1206;font-weight:700;
+    padding:14px 28px;border-radius:12px;text-decoration:none;border:0;cursor:pointer;
+    font-size:16px;transition:transform .15s ease,background .15s ease}
+  .btn:hover{background:var(--amber-d)}
+  .btn:active{transform:scale(.98)}
+  .btn-nav{padding:10px 18px;font-size:15px}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn-ghost:hover{background:var(--card);border-color:var(--faint)}
+
+  /* hero 1 — quiet aurora */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;
+    justify-content:center;overflow:hidden;text-align:center}
+  .hero .aurora{position:absolute;inset:0;z-index:0}
+  .hero .aurora canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .hero .fallback{position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(1100px 520px at 50% 8%,rgba(242,178,62,.14),transparent 60%),
+      radial-gradient(900px 600px at 80% 30%,rgba(43,74,140,.35),transparent 65%),
+      linear-gradient(180deg,#0a1020 0%,#070b16 70%)}
+  .hero.has-gl .fallback{display:none}
+  .hero .scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(7,11,22,.55) 0%,rgba(7,11,22,.15) 40%,rgba(7,11,22,.75) 100%)}
+  .hero-inner{position:relative;z-index:2;padding:96px 20px 80px;max-width:1000px}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+    color:var(--amber);margin-bottom:22px}
+  h1{font-size:clamp(46px,9vw,108px);line-height:1.04;letter-spacing:-1.5px;
+    font-weight:800;text-wrap:balance;margin-bottom:24px}
+  h1 .ch{display:inline-block;will-change:transform,opacity;opacity:0;
+    transform:translateY(.55em);animation:charIn .9s cubic-bezier(.22,.61,.36,1) forwards}
+  @keyframes charIn{to{opacity:1;transform:translateY(0)}}
+  h1 .word{display:inline-block;white-space:nowrap}
+  .sub{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:640px;
+    margin:0 auto 36px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .scroll-hint{margin-top:56px;color:var(--faint);font-size:13px;letter-spacing:1px}
+
+  footer{border-top:1px solid var(--line);padding:28px 0}
+  .concept-note{color:var(--faint);font-size:13px;text-align:center}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#hero">Skip to content</a>
+<nav class="nav" aria-label="Site">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Premier Duo LLC — back to main demo">
+      <img src="assets/premier-duo-monogram.svg" alt="Premier Duo LLC logo" width="38" height="34">
+    </a>
+    <a class="btn btn-nav" href="index.html#quote">Get my free quote</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero" id="hero">
+    <div class="aurora" id="aurora" aria-hidden="true"></div>
+    <div class="fallback" aria-hidden="true"></div>
+    <div class="scrim" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="kicker">Macomb, IL and 60 miles in every direction</p>
+      <h1 id="h1">Your Christmas lights, up all year.</h1>
+      <p class="sub">One install for Christmas, Halloween, game day, the 4th, birthdays. Or just a warm white glow every evening.</p>
+      <div class="cta-row">
+        <a class="btn" href="index.html#quote">Get my free quote</a>
+        <a class="btn btn-ghost" href="index.html#gallery">See the difference</a>
+      </div>
+      <p class="scroll-hint">Hero concept 1 — quiet aurora</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="concept-note">Hero concept 1 of 5 — demo only.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = window.matchMedia("(pointer: fine)").matches;
+
+  /* SplitText-style char stagger (CSS animation, compositor-driven) */
+  var h1 = document.getElementById("h1");
+  if(h1 && !reduceMotion){
+    var text = h1.textContent;
+    h1.setAttribute("aria-label", text);
+    h1.textContent = "";
+    var chars = [];
+    text.split(/(\s+)/).forEach(function(part){
+      if(/^\s+$/.test(part)){
+        h1.appendChild(document.createTextNode("\u00A0"));
+        return;
+      }
+      var w = document.createElement("span");
+      w.className = "word";
+      w.setAttribute("aria-hidden", "true");
+      part.split("").forEach(function(c){
+        var s = document.createElement("span");
+        s.className = "ch";
+        s.textContent = c;
+        w.appendChild(s);
+        chars.push(s);
+      });
+      h1.appendChild(w);
+    });
+    chars.forEach(function(c, i){
+      c.style.animationDelay = (250 + i * 22) + "ms";
+    });
+  }
+
+  /* SoftAurora background (React Bits, vanilla port via OGL) */
+  if(!fine || reduceMotion || !("WebGL2RenderingContext" in window)){ return; }
+  var host = document.getElementById("aurora");
+  var hero = document.getElementById("hero");
+  var started = false;
+  var io = new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting && !started){
+      started = true;
+      mount();
+    }
+  }, {threshold: 0});
+  io.observe(hero);
+
+  function hex(h){
+    h = h.replace("#","");
+    return [parseInt(h.slice(0,2),16)/255, parseInt(h.slice(2,4),16)/255, parseInt(h.slice(4,6),16)/255];
+  }
+
+  function mount(){
+    var fragJson = "\nprecision highp float;\n\nuniform float uTime;\nuniform vec3 uResolution;\nuniform float uSpeed;\nuniform float uScale;\nuniform float uBrightness;\nuniform vec3 uColor1;\nuniform vec3 uColor2;\nuniform float uNoiseFreq;\nuniform float uNoiseAmp;\nuniform float uBandHeight;\nuniform float uBandSpread;\nuniform float uOctaveDecay;\nuniform float uLayerOffset;\nuniform float uColorSpeed;\nuniform vec2 uMouse;\nuniform float uMouseInfluence;\nuniform bool uEnableMouse;\nuniform float uLightMode;\n\n#define TAU 6.28318\n\nvec3 gradientHash(vec3 p) {\n  p = vec3(\n    dot(p, vec3(127.1, 311.7, 234.6)),\n    dot(p, vec3(269.5, 183.3, 198.3)),\n    dot(p, vec3(169.5, 283.3, 156.9))\n  );\n  vec3 h = fract(sin(p) * 43758.5453123);\n  float phi = acos(2.0 * h.x - 1.0);\n  float theta = TAU * h.y;\n  return vec3(cos(theta) * sin(phi), sin(theta) * cos(phi), cos(phi));\n}\n\nfloat quinticSmooth(float t) {\n  float t2 = t * t;\n  float t3 = t * t2;\n  return 6.0 * t3 * t2 - 15.0 * t2 * t2 + 10.0 * t3;\n}\n\nvec3 cosineGradient(float t, vec3 a, vec3 b, vec3 c, vec3 d) {\n  return a + b * cos(TAU * (c * t + d));\n}\n\nfloat perlin3D(float amplitude, float frequency, float px, float py, float pz) {\n  float x = px * frequency;\n  float y = py * frequency;\n\n  float fx = floor(x); float fy = floor(y); float fz = floor(pz);\n  float cx = ceil(x);  float cy = ceil(y);  float cz = ceil(pz);\n\n  vec3 g000 = gradientHash(vec3(fx, fy, fz));\n  vec3 g100 = gradientHash(vec3(cx, fy, fz));\n  vec3 g010 = gradientHash(vec3(fx, cy, fz));\n  vec3 g110 = gradientHash(vec3(cx, cy, fz));\n  vec3 g001 = gradientHash(vec3(fx, fy, cz));\n  vec3 g101 = gradientHash(vec3(cx, fy, cz));\n  vec3 g011 = gradientHash(vec3(fx, cy, cz));\n  vec3 g111 = gradientHash(vec3(cx, cy, cz));\n\n  float d000 = dot(g000, vec3(x - fx, y - fy, pz - fz));\n  float d100 = dot(g100, vec3(x - cx, y - fy, pz - fz));\n  float d010 = dot(g010, vec3(x - fx, y - cy, pz - fz));\n  float d110 = dot(g110, vec3(x - cx, y - cy, pz - fz));\n  float d001 = dot(g001, vec3(x - fx, y - fy, pz - cz));\n  float d101 = dot(g101, vec3(x - cx, y - fy, pz - cz));\n  float d011 = dot(g011, vec3(x - fx, y - cy, pz - cz));\n  float d111 = dot(g111, vec3(x - cx, y - cy, pz - cz));\n\n  float sx = quinticSmooth(x - fx);\n  float sy = quinticSmooth(y - fy);\n  float sz = quinticSmooth(pz - fz);\n\n  float lx00 = mix(d000, d100, sx);\n  float lx10 = mix(d010, d110, sx);\n  float lx01 = mix(d001, d101, sx);\n  float lx11 = mix(d011, d111, sx);\n\n  float ly0 = mix(lx00, lx10, sy);\n  float ly1 = mix(lx01, lx11, sy);\n\n  return amplitude * mix(ly0, ly1, sz);\n}\n\nfloat auroraGlow(float t, vec2 shift) {\n  vec2 uv = gl_FragCoord.xy / uResolution.y;\n  uv += shift;\n\n  float noiseVal = 0.0;\n  float freq = uNoiseFreq;\n  float amp = uNoiseAmp;\n  vec2 samplePos = uv * uScale;\n\n  for (float i = 0.0; i < 3.0; i += 1.0) {\n    noiseVal += perlin3D(amp, freq, samplePos.x, samplePos.y, t);\n    amp *= uOctaveDecay;\n    freq *= 2.0;\n  }\n\n  float yBand = uv.y * 10.0 - uBandHeight * 10.0;\n  return 0.3 * max(exp(uBandSpread * (1.0 - 1.1 * abs(noiseVal + yBand))), 0.0);\n}\n\nvoid main() {\n  vec2 uv = gl_FragCoord.xy / uResolution.xy;\n  float t = uSpeed * 0.4 * uTime;\n\n  vec2 shift = vec2(0.0);\n  if (uEnableMouse) {\n    shift = (uMouse - 0.5) * uMouseInfluence;\n  }\n\n  float glow1 = auroraGlow(t, shift);\n  float glow2 = auroraGlow(t + uLayerOffset, shift);\n  vec3 gradient1 = cosineGradient(uv.x + uTime * uSpeed * 0.2 * uColorSpeed, vec3(0.5), vec3(0.5), vec3(1.0), vec3(0.3, 0.20, 0.20));\n  vec3 gradient2 = cosineGradient(uv.x + uTime * uSpeed * 0.1 * uColorSpeed, vec3(0.5), vec3(0.5), vec3(2.0, 1.0, 0.0), vec3(0.5, 0.20, 0.25));\n\n  vec3 col = 0.99 * glow1 * gradient1 * uColor1;\n  col += 0.99 * glow2 * gradient2 * uColor2;\n\n  col *= uBrightness;\n  float alpha = clamp(length(col), 0.0, 1.0);\n  if (uLightMode > 0.5) {\n    float phase1 = dot(gradient1, vec3(0.299, 0.587, 0.114));\n    float phase2 = dot(gradient2, vec3(0.299, 0.587, 0.114));\n    float weight1 = pow(max(glow1 * (0.62 + 0.38 * phase1), 0.0), 1.35);\n    float weight2 = pow(max(glow2 * (0.62 + 0.38 * phase2), 0.0), 1.35);\n    float weightSum = max(weight1 + weight2, 0.0001);\n\n    vec3 chroma = (weight1 * uColor1 + weight2 * uColor2) / weightSum;\n    float neutral = min(chroma.r, min(chroma.g, chroma.b));\n    chroma = max(chroma - vec3(neutral * 0.78), vec3(0.0));\n    float peak = max(chroma.r, max(chroma.g, chroma.b));\n    chroma = pow(clamp(chroma / max(peak, 0.0001), 0.0, 1.0), vec3(1.08));\n\n    float ink = clamp((weight1 + weight2) * uBrightness * 1.55, 0.0, 0.82);\n    gl_FragColor = vec4(mix(vec3(1.0), chroma, ink), 1.0);\n  } else {\n    gl_FragColor = vec4(col, alpha);\n  }\n}\n";
+    var mod = document.createElement("script");
+    mod.type = "module";
+    var code = [];
+    code.push("import { Renderer, Program, Mesh, Triangle } from 'https://esm.sh/ogl@1';");
+    code.push("try {");
+    code.push("var container = document.getElementById('aurora');");
+    code.push("var heroEl = document.getElementById('hero');");
+    code.push("var renderer = new Renderer({ antialias:false, depth:false, stencil:false, powerPreference:'low-power', alpha:true });");
+    code.push("var gl = renderer.gl;");
+    code.push("gl.clearColor(0,0,0,0);");
+    code.push("renderer.dpr = Math.min(window.devicePixelRatio || 1, 1.25);");
+    code.push("var vertex = 'attribute vec2 uv;attribute vec2 position;varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,0,1);}';");
+    code.push("var fragment = " + JSON.stringify(fragJson) + ";");
+    code.push("function hx(h){ h=h.replace('#',''); return [parseInt(h.slice(0,2),16)/255, parseInt(h.slice(2,4),16)/255, parseInt(h.slice(4,6),16)/255]; }");
+    code.push("function resize(){ renderer.setSize(container.offsetWidth, container.offsetHeight); if(program){ program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width/gl.canvas.height]; } }");
+    code.push("var program = new Program(gl, { vertex: vertex, fragment: fragment, uniforms: {");
+    code.push("  uTime: { value: 0 },");
+    code.push("  uResolution: { value: [1,1,1] },");
+    code.push("  uSpeed: { value: 0.45 },");
+    code.push("  uScale: { value: 1.4 },");
+    code.push("  uBrightness: { value: 0.8 },");
+    code.push("  uColor1: { value: hx('#f2b23e') },");
+    code.push("  uColor2: { value: hx('#7a5a2e') },");
+    code.push("  uNoiseFreq: { value: 2.2 },");
+    code.push("  uNoiseAmp: { value: 0.9 },");
+    code.push("  uBandHeight: { value: 0.62 },");
+    code.push("  uBandSpread: { value: 1.1 },");
+    code.push("  uOctaveDecay: { value: 0.12 },");
+    code.push("  uLayerOffset: { value: 0 },");
+    code.push("  uColorSpeed: { value: 0.6 },");
+    code.push("  uMouse: { value: new Float32Array([0.5, 0.5]) },");
+    code.push("  uMouseInfluence: { value: 0.0 },");
+    code.push("  uEnableMouse: { value: false },");
+    code.push("  uLightMode: { value: 0 }");
+    code.push("} });");
+    code.push("var mesh = new Mesh(gl, { geometry: new Triangle(gl), program: program });");
+    code.push("container.appendChild(gl.canvas);");
+    code.push("heroEl.classList.add('has-gl');");
+    code.push("resize();");
+    code.push("window.addEventListener('resize', resize);");
+    code.push("var running = true;");
+    code.push("var vio = new IntersectionObserver(function(en){ running = en[0].isIntersecting; if(running){ requestAnimationFrame(tick); } });");
+    code.push("vio.observe(heroEl);");
+    code.push("var t0 = performance.now();");
+    code.push("function tick(now){ if(!running){ return; } program.uniforms.uTime.value = (now - t0) * 0.001; renderer.render({ scene: mesh }); requestAnimationFrame(tick); }");
+    code.push("requestAnimationFrame(tick);");
+    code.push("} catch(err) { /* fallback gradient stays */ }");
+    mod.textContent = code.join("\n");
+    document.body.appendChild(mod);
+  }
+})();
+</script>
+</body>
+</html>
