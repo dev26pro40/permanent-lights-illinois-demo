@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your phone is the light switch — Permanent Lights Illinois</title>
+<meta name="theme-color" content="#070b16">
+<meta name="description" content="App section concept: control permanent roofline lights from your phone. Demo only.">
+<!-- APP-DEMO -->
+<link rel="preconnect" href="https://ironpeaklighting.com">
+<style>
+  @property --app1{syntax:"<color>";inherits:true;initial-value:#ffd9a0}
+  @property --app2{syntax:"<color>";inherits:true;initial-value:#ffb35c}
+  :root{
+    --bg:#070b16; --ink:#f2f5fa; --muted:#c3ccdd; --faint:#8b9bb5;
+    --line:#1e2a44; --card:#101828; --amber:#f2b23e; --amber-d:#c98f22;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;color-scheme:dark}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  .skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--amber);color:#1a1206;
+    font-weight:700;padding:10px 16px;border-radius:10px;text-decoration:none;transition:top .15s}
+  .skip:focus{top:12px}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .nav{position:sticky;top:0;z-index:50;background:rgba(7,11,22,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px}
+  .brand{display:inline-flex;align-items:center;background:#fff;border-radius:10px;padding:5px 7px;line-height:0}
+  .brand img{width:38px;height:auto}
+  .btn{display:inline-block;background:var(--amber);color:#1a1206;font-weight:700;padding:14px 28px;
+    border-radius:12px;text-decoration:none;border:0;cursor:pointer;font-size:16px}
+  .btn:hover{background:var(--amber-d)}
+  .btn-nav{padding:10px 18px;font-size:15px}
+
+  /* app section */
+  .appsec{padding:64px 0 80px}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    color:var(--amber);margin-bottom:14px}
+  h1{font-size:clamp(34px,6vw,58px);line-height:1.06;letter-spacing:-.5px;max-width:20ch;text-wrap:balance}
+  .lede{font-size:clamp(16px,2.2vw,19px);color:var(--muted);max-width:56ch;margin:16px 0 8px}
+  .setup-note{display:flex;gap:10px;align-items:flex-start;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:18px 0 0;max-width:56ch;
+    font-size:15px;color:var(--ink)}
+  .setup-note svg{flex:0 0 auto;margin-top:2px}
+  .app-grid{display:grid;gap:36px;margin-top:44px;align-items:start}
+  @media(min-width:940px){.app-grid{grid-template-columns:330px 1fr;gap:56px;align-items:center}}
+
+  /* phone mockup */
+  .phone{width:300px;max-width:100%;margin:0 auto;background:#04060c;border:1px solid #2a3a5f;
+    border-radius:48px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04)}
+  .screen{background:#0c1322;border-radius:38px;padding:10px 16px 22px;min-height:600px}
+  .notch{width:104px;height:25px;background:#04060c;border-radius:999px;margin:2px auto 12px}
+  .app-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+  .app-head strong{font-size:17px;letter-spacing:-.2px}
+  .conn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--faint);margin-left:10px;font-weight:400}
+  .conn i{width:8px;height:8px;border-radius:50%;background:#35d07f;box-shadow:0 0 8px #35d07f}
+  .now{font-size:13px;color:var(--faint);margin-bottom:14px;min-height:20px}
+  .now b{color:var(--amber);font-weight:600}
+  .power{width:100%;display:flex;align-items:center;gap:12px;background:#111a2e;border:1px solid var(--line);
+    border-radius:16px;padding:12px 14px;cursor:pointer;color:var(--ink);font-size:15px;font-weight:600}
+  .power .pw-track{width:52px;height:30px;border-radius:999px;background:#2a3a5f;position:relative;flex:0 0 auto;
+    transition:background .25s}
+  .power .pw-knob{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;
+    transition:left .25s}
+  .power[aria-checked="true"] .pw-track{background:var(--amber)}
+  .power[aria-checked="true"] .pw-knob{left:25px}
+  .app-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);
+    margin:20px 0 10px;display:flex;justify-content:space-between;align-items:baseline}
+  .app-label span{letter-spacing:0;text-transform:none;color:var(--muted);font-weight:600}
+  .swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .sw{aspect-ratio:1;border-radius:50%;border:2px solid transparent;cursor:pointer;min-height:56px;
+    background:radial-gradient(circle at 35% 30%,var(--sw2,#fff),var(--sw) 70%);
+    box-shadow:0 4px 14px rgba(0,0,0,.4)}
+  .sw[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 3px var(--amber),0 4px 14px rgba(0,0,0,.4)}
+  input[type="range"].bright{width:100%;accent-color:var(--amber);height:44px;cursor:pointer;background:transparent}
+  .presets{display:flex;flex-wrap:wrap;gap:8px}
+  .pre{background:#111a2e;border:1px solid var(--line);color:var(--ink);border-radius:999px;
+    padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;min-height:44px}
+  .pre[aria-pressed="true"]{border-color:var(--amber);color:var(--amber);background:#1a1408}
+  .sched{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#111a2e;
+    border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:20px}
+  .sched strong{display:block;font-size:14px}
+  .sched span{font-size:13px;color:var(--faint)}
+  .switch{width:52px;height:30px;border-radius:999px;background:#2a3a5f;border:0;cursor:pointer;
+    position:relative;flex:0 0 auto;min-height:30px}
+  .switch span{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;
+    transition:left .25s}
+  .switch::after{content:"";position:absolute;inset:-7px -2px}
+  .switch[aria-checked="true"]{background:var(--amber)}
+  .switch[aria-checked="true"] span{left:25px}
+  .sched-note{font-size:12px;color:var(--faint);margin-top:8px;min-height:18px}
+
+  /* live preview */
+  .pv-wrap{--app1:#ffd9a0;--app2:#ffb35c;--appLevel:.8}
+  .preview{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+  .preview img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;transition:filter .5s ease}
+  .preview.off img{filter:brightness(.45) saturate(.7)}
+  .wash{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:var(--appLevel);
+    background:
+      radial-gradient(115% 62% at 50% 2%,var(--app1),transparent 68%),
+      linear-gradient(180deg,var(--app2),transparent 58%);
+    transition:opacity .5s ease,--app1 .5s ease,--app2 .5s ease}
+  .pv-cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--faint);
+    margin-top:10px}
+  .pv-tag{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    background:rgba(5,7,13,.65);border:1px solid var(--line);border-radius:999px;padding:5px 12px;
+    position:absolute;top:12px;left:12px;color:var(--ink)}
+  .pv-live{position:absolute;top:12px;right:12px;font-size:12px;font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;background:rgba(5,7,13,.65);border:1px solid var(--line);border-radius:999px;
+    padding:5px 12px;color:var(--amber);display:inline-flex;align-items:center;gap:7px}
+  .pv-live i{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber)}
+  @media(max-width:939px){
+    .pv-wrap{position:sticky;top:74px;z-index:20;order:-1}
+    .preview{box-shadow:0 18px 50px rgba(0,0,0,.5)}
+  }
+
+  .feat{display:grid;gap:12px;margin-top:44px}
+  @media(min-width:760px){.feat{grid-template-columns:repeat(3,1fr);gap:18px}}
+  .feat div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .feat b{display:block;font-size:16px;margin-bottom:6px}
+  .feat p{font-size:14px;color:var(--muted)}
+
+  footer{padding:26px 0;color:var(--faint);font-size:12px;border-top:1px solid var(--line);margin-top:40px}
+  @media(max-width:480px){.kicker{font-size:11px;letter-spacing:1.5px}}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .wash,.preview img,.power .pw-track,.power .pw-knob,.switch span{transition:none}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#appdemo">Skip to the app demo</a>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Premier Duo LLC — back to demo home">
+      <img src="assets/premier-duo-monogram.svg" alt="Premier Duo LLC logo" width="38" height="34">
+    </a>
+    <a class="btn btn-nav" href="./#quote">Free quote</a>
+  </div>
+</nav>
+
+<main class="wrap appsec" id="appdemo">
+  <p class="kicker">The app</p>
+  <h1>Your phone is the light switch.</h1>
+  <p class="lede">Pick a color from your couch. Set a schedule once. Done. The track lives under your soffit all year. You never touch a ladder again.</p>
+  <p class="setup-note">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="#f2b23e" stroke-width="2"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="#f2b23e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span><strong>We set up the app with you on install day.</strong> Colors, presets, schedules. You leave knowing exactly how it works.</span>
+  </p>
+
+  <div class="app-grid">
+    <div class="phone" role="region" aria-label="Demo of the lighting control app">
+      <div class="screen">
+        <div class="notch" aria-hidden="true"></div>
+        <div class="app-head">
+          <strong>Permanent Lights</strong>
+          <span class="conn"><i></i>Connected</span>
+        </div>
+        <p class="now" id="nowShowing" aria-live="polite">Now: <b>Warm white</b> · 80%</p>
+
+        <button class="power" id="powerBtn" role="switch" aria-checked="true">
+          <span class="pw-track" aria-hidden="true"><span class="pw-knob"></span></span>
+          <span>Power</span>
+        </button>
+
+        <p class="app-label" id="colorLabel">Color</p>
+        <div class="swatches" role="group" aria-labelledby="colorLabel">
+          <button class="sw" style="--sw:#ffd9a0;--sw2:#fff3dd" data-name="Warm white" data-c1="#ffd9a0" data-c2="#ffb35c" aria-pressed="true" aria-label="Warm white"></button>
+          <button class="sw" style="--sw:#ff5a5a;--sw2:#ff8a8a" data-name="Red" data-c1="#ff5a5a" data-c2="#c81e3a" aria-pressed="false" aria-label="Red"></button>
+          <button class="sw" style="--sw:#35d07f;--sw2:#6fe3a5" data-name="Green" data-c1="#35d07f" data-c2="#1d7a45" aria-pressed="false" aria-label="Green"></button>
+          <button class="sw" style="--sw:#4d8dff;--sw2:#8ab4ff" data-name="Blue" data-c1="#4d8dff" data-c2="#2b4fc4" aria-pressed="false" aria-label="Blue"></button>
+          <button class="sw" style="--sw:#f2b23e;--sw2:#ffd47a" data-name="Amber" data-c1="#f2b23e" data-c2="#c96a1e" aria-pressed="false" aria-label="Amber"></button>
+          <button class="sw" style="--sw:#a04dff;--sw2:#c48fff" data-name="Purple" data-c1="#a04dff" data-c2="#5b2bd6" aria-pressed="false" aria-label="Purple"></button>
+        </div>
+
+        <p class="app-label" id="brightLabel">Brightness <span id="brightVal">80%</span></p>
+        <input type="range" class="bright" id="bright" min="5" max="100" value="80" aria-labelledby="brightLabel">
+
+        <p class="app-label" id="presetLabel">Presets</p>
+        <div class="presets" role="group" aria-labelledby="presetLabel">
+          <button class="pre" data-name="Christmas" data-c1="#ff5a5a" data-c2="#35d07f" aria-pressed="false">Christmas</button>
+          <button class="pre" data-name="Halloween" data-c1="#ff8a2a" data-c2="#a04dff" aria-pressed="false">Halloween</button>
+          <button class="pre" data-name="4th of July" data-c1="#ff5a6e" data-c2="#4d8dff" aria-pressed="false">4th of July</button>
+          <button class="pre" data-name="Game day" data-c1="#f2b23e" data-c2="#ff7a1a" aria-pressed="false">Game day</button>
+          <button class="pre" data-name="Security glow" data-c1="#ffe9c4" data-c2="#ffca7a" data-level="35" aria-pressed="false">Security glow</button>
+        </div>
+
+        <div class="sched">
+          <div><strong>Schedule</strong><span>On at sunset, off at 11 PM</span></div>
+          <button class="switch" id="schedBtn" role="switch" aria-checked="true" aria-label="Schedule on or off"><span aria-hidden="true"></span></button>
+        </div>
+        <p class="sched-note" id="schedNote" aria-live="polite">Schedule is on. Lights run themselves.</p>
+      </div>
+  </div>
+
+    <div class="pv-wrap">
+      <div class="preview" id="preview">
+        <img src="https://ironpeaklighting.com/cdn/shop/t/54/assets/ip-hq-hero-roofline.jpg"
+             alt="Sample install: house at dusk with permanent roofline lights glowing" width="1600" height="900">
+        <div class="wash" aria-hidden="true"></div>
+        <span class="pv-tag">Sample install</span>
+        <span class="pv-live"><i></i>Live preview</span>
+      </div>
+      <div class="pv-cap">
+        <span>Simulated preview. The real app drives your actual lights.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat">
+    <div><b>16 million colors</b><p>Any color, any night, from your couch. Warm white for every day, full color for the fun ones.</p></div>
+    <div><b>Set it once</b><p>Schedules run themselves. Sunset on, bedtime off. Holidays handled without you lifting a finger.</p></div>
+    <div><b>Invisible by day</b><p>The track hides under your soffit. From the street, there is nothing to see until the sun goes down.</p></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">App section concept — demo only. Permanent Lights Illinois is a d/b/a of Premier Duo LLC. © 2026</div>
+</footer>
+<script>
+(function(){
+  "use strict";
+  var pv = document.getElementById("preview");
+  var powerBtn = document.getElementById("powerBtn");
+  var bright = document.getElementById("bright");
+  var brightVal = document.getElementById("brightVal");
+  var nowShowing = document.getElementById("nowShowing");
+  var schedBtn = document.getElementById("schedBtn");
+  var schedNote = document.getElementById("schedNote");
+  var swatches = Array.prototype.slice.call(document.querySelectorAll(".sw"));
+  var presets = Array.prototype.slice.call(document.querySelectorAll(".pre"));
+
+  var state = {c1:"#ffd9a0", c2:"#ffb35c", level:80, on:true, name:"Warm white"};
+
+  function render(){
+    pv.style.setProperty("--app1", state.c1);
+    pv.style.setProperty("--app2", state.c2);
+    pv.style.setProperty("--appLevel", state.on ? (state.level/100) : 0);
+    pv.classList.toggle("off", !state.on);
+    powerBtn.setAttribute("aria-checked", state.on ? "true" : "false");
+    brightVal.textContent = state.level + "%";
+    if(document.activeElement !== bright){ bright.value = state.level; }
+    nowShowing.innerHTML = state.on
+      ? "Now: <b>" + state.name + "</b> · " + state.level + "%"
+      : "Now: <b>Off</b>";
+    swatches.forEach(function(b){
+      b.setAttribute("aria-pressed", b.getAttribute("data-name") === state.name ? "true" : "false");
+    });
+  }
+
+  function wake(){
+    if(!state.on){ state.on = true; }
+  }
+
+  swatches.forEach(function(b){
+    b.addEventListener("click", function(){
+      wake();
+      state.c1 = b.getAttribute("data-c1");
+      state.c2 = b.getAttribute("data-c2");
+      state.name = b.getAttribute("data-name");
+      presets.forEach(function(p){ p.setAttribute("aria-pressed", "false"); });
+      render();
+    });
+  });
+
+  presets.forEach(function(b){
+    b.addEventListener("click", function(){
+      wake();
+      state.c1 = b.getAttribute("data-c1");
+      state.c2 = b.getAttribute("data-c2");
+      state.name = b.getAttribute("data-name");
+      var lv = b.getAttribute("data-level");
+      if(lv){ state.level = parseInt(lv, 10); }
+      presets.forEach(function(p){ p.setAttribute("aria-pressed", p === b ? "true" : "false"); });
+      render();
+    });
+  });
+
+  bright.addEventListener("input", function(){
+    wake();
+    state.level = parseInt(bright.value, 10);
+    render();
+  });
+
+  powerBtn.addEventListener("click", function(){
+    state.on = !state.on;
+    render();
+  });
+
+  schedBtn.addEventListener("click", function(){
+    var on = schedBtn.getAttribute("aria-checked") === "true";
+    schedBtn.setAttribute("aria-checked", on ? "false" : "true");
+    schedBtn.setAttribute("aria-label", on ? "Schedule off. Turn schedule on." : "Schedule on. Turn schedule off.");
+    schedNote.textContent = on
+      ? "Schedule is off. Lights stay as you left them."
+      : "Schedule is on. Lights run themselves.";
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
