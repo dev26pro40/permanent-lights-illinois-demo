@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Permanent Christmas Lights, Macomb IL: Hero 17 "Collage"</title>
+<style>
+:root{
+  --paper:#eadfc6;       /* warm kraft paper */
+  --paper2:#f4ecda;      /* lighter paper for cards backing */
+  --ink:#241b11;         /* warm dark ink */
+  --ink-soft:#5c4c38;
+  --red:#8f3524;         /* barn red CTA */
+  --tape:rgba(216,198,160,.82);
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:Georgia,"Iowan Old Style","Times New Roman",serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+/* paper grain (tudor: engineered imperfection, no AI-smoothness) */
+body::before{content:"";position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.055' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.47 0 0 0 0 0.36 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23p)'/%3E%3C/svg%3E")}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+img{display:block;max-width:100%}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;position:relative;z-index:5}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:15px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.brand img{width:34px;height:34px;border-radius:8px;background:#fff;padding:2px;box-shadow:0 1px 3px rgba(60,40,20,.25)}
+.nav-cta{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border-radius:999px;background:var(--ink);color:var(--paper);font-weight:700;font-size:15px;text-decoration:none;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+
+.hero{position:relative;z-index:2;padding:26px 20px 8px;max-width:1080px;margin:0 auto}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+h1{font-size:clamp(2.7rem,11.5vw,5.2rem);line-height:1.0;letter-spacing:-.015em;font-weight:700;text-wrap:balance;max-width:13ch}
+h1 .u{font-style:italic;color:var(--red)}
+.sub{margin-top:16px;font-size:clamp(1.02rem,4vw,1.25rem);color:var(--ink-soft);max-width:44ch;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.cta-row{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta{display:inline-flex;align-items:center;min-height:52px;padding:12px 30px;border-radius:999px;background:var(--red);color:#f9f1de;font-weight:700;font-size:17px;text-decoration:none;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;box-shadow:0 3px 10px rgba(143,53,36,.35)}
+.cta-note{font-size:14px;color:var(--ink-soft);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+
+/* collage: deliberate imperfection */
+.collage{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:34px 20px 20px;display:grid;gap:0}
+.card{position:relative;background:var(--paper2);padding:10px 10px 12px;box-shadow:0 10px 28px rgba(60,40,20,.28);margin:0 6px}
+.card:nth-child(1){--r:-3deg;transform:rotate(var(--r));margin-bottom:-34px;z-index:2}
+.card:nth-child(2){--r:2.4deg;transform:rotate(var(--r));margin-left:34px;z-index:3}
+.card:nth-child(3){--r:-1.6deg;transform:rotate(var(--r));margin:-30px 18px 0 8px;z-index:2}
+.card img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+/* torn edges: jagged clip per card */
+.card.t1 img{clip-path:polygon(0% 4%,5% 1%,13% 3%,24% 0%,36% 3%,49% 1%,61% 3%,74% 0%,87% 3%,96% 1%,100% 5%,98% 16%,100% 29%,98% 43%,100% 56%,98% 69%,100% 83%,97% 94%,92% 100%,80% 97%,68% 100%,55% 97%,42% 100%,29% 97%,17% 100%,8% 97%,1% 95%,3% 83%,0% 70%,3% 57%,0% 43%,3% 29%,0% 15%)}
+.card.t2 img{clip-path:polygon(1% 2%,10% 0%,20% 3%,32% 0%,44% 2%,56% 0%,68% 3%,80% 0%,91% 2%,99% 5%,97% 18%,100% 31%,98% 45%,100% 60%,97% 73%,100% 88%,96% 96%,86% 99%,74% 96%,62% 100%,50% 97%,38% 100%,26% 96%,14% 100%,5% 96%,0% 90%,2% 76%,0% 62%,2% 48%,0% 34%,2% 20%)}
+.card.t3 img{clip-path:polygon(0% 3%,8% 0%,18% 2%,30% 0%,42% 3%,54% 0%,66% 2%,78% 0%,89% 3%,98% 1%,100% 8%,98% 22%,100% 36%,98% 50%,100% 64%,98% 78%,100% 92%,93% 98%,82% 100%,70% 97%,58% 100%,46% 97%,34% 100%,22% 97%,11% 100%,3% 96%,1% 84%,3% 70%,0% 56%,2% 42%,0% 28%,2% 14%)}
+.tape{position:absolute;top:-11px;left:50%;width:104px;height:30px;background:var(--tape);
+  box-shadow:0 1px 3px rgba(60,40,20,.25);border-left:2px dashed rgba(120,90,50,.3);border-right:2px dashed rgba(120,90,50,.3);z-index:4}
+.card:nth-child(1) .tape{transform:translateX(-50%) rotate(-5deg)}
+.card:nth-child(2) .tape{transform:translateX(-50%) rotate(4deg)}
+.card:nth-child(3) .tape{transform:translateX(-50%) rotate(-3deg)}
+.stamp{position:absolute;right:16px;bottom:44px;z-index:4;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--paper2);background:rgba(36,27,17,.72);border:1px solid rgba(244,236,218,.5);padding:6px 10px;border-radius:4px;transform:rotate(-4deg)}
+figcaption{padding:10px 4px 2px;font-size:12px;letter-spacing:.06em;color:var(--ink-soft)}
+/* taped handwritten-style note */
+.note{position:relative;z-index:4;justify-self:start;margin:26px 10px 0;max-width:250px;background:#f8f2e2;padding:16px 18px 14px;
+  transform:rotate(2.5deg);box-shadow:0 8px 20px rgba(60,40,20,.25);font-style:italic;font-size:17px;line-height:1.45}
+.note .tape{top:-11px}
+/* entrance: cutouts settle into place */
+.js .card,.js .note{opacity:0;animation:settle .8s cubic-bezier(.2,.7,.25,1) forwards;animation-delay:var(--d,0s)}
+.js .card:nth-child(1){--d:.15s}.js .card:nth-child(2){--d:.32s}.js .card:nth-child(3){--d:.49s}.js .note{--d:.66s}
+@keyframes settle{from{opacity:0;translate:0 34px;rotate:var(--r,0deg) scale(.97)}to{opacity:1;translate:0 0;rotate:var(--r,0deg) scale(1)}}
+.js .hero>*{opacity:0;animation:fadeup .7s ease forwards}
+.js .kicker{animation-delay:.05s}.js h1{animation-delay:.15s}.js .sub{animation-delay:.3s}.js .cta-row{animation-delay:.45s}
+@keyframes fadeup{from{opacity:0;translate:0 16px}to{opacity:1;translate:0 0}}
+
+.foot{padding:26px 20px;text-align:center;font-size:12.5px;color:var(--ink-soft);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (min-width:760px){
+  .hero{padding-top:54px}
+  .collage{grid-template-columns:1.05fr .95fr;gap:18px;align-items:start;padding-top:44px}
+  .card:nth-child(1){margin:0;grid-row:span 2;align-self:center}
+  .card:nth-child(2){margin:26px 0 0}
+  .card:nth-child(3){margin:0 40px 0 0}
+  .note{grid-column:2;margin:6px 0 0 30px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .card,.js .note,.js .hero>*{animation:none;opacity:1;translate:0 0}
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Primary">
+  <a class="brand" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/">
+    <img src="assets/premier-duo-monogram.svg" alt="" width="34" height="34">Permanent Lights Illinois</a>
+  <a class="nav-cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get a free quote</a>
+</nav>
+<main>
+  <section class="hero">
+    <p class="kicker mono">permanent christmas lights · macomb, il</p>
+    <h1>Lights for every season. <span class="u">One install.</span></h1>
+    <p class="sub">A slim track under the soffit. Pick the colors from your phone. Christmas, Halloween, game day, or a soft white glow on a plain Tuesday.</p>
+    <div class="cta-row">
+      <a class="cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get my free quote</a>
+      <span class="cta-note">Free quote. We reply within 24 hours.</span>
+    </div>
+  </section>
+  <section class="collage" aria-label="Sample installs">
+    <figure class="card t1">
+      <span class="tape" aria-hidden="true"></span>
+      <img src="assets/fresh/fp2.jpg" alt="Close-up of a soffit light puck glowing blue at night">
+      <span class="stamp mono">Sample install</span>
+      <figcaption class="mono">fig. 01 · soffit close-up</figcaption>
+    </figure>
+    <figure class="card t2">
+      <span class="tape" aria-hidden="true"></span>
+      <img src="assets/fresh/fp10.jpg" alt="House with purple and green lights and Halloween yard decor">
+      <span class="stamp mono">Sample install</span>
+      <figcaption class="mono">fig. 02 · halloween</figcaption>
+    </figure>
+    <figure class="card t3">
+      <span class="tape" aria-hidden="true"></span>
+      <img src="assets/fresh/fp4.jpg" alt="House gables lit blue and purple at dusk">
+      <span class="stamp mono">Sample install</span>
+      <figcaption class="mono">fig. 03 · gables at dusk</figcaption>
+    </figure>
+    <aside class="note">
+      <span class="tape" aria-hidden="true"></span>
+      Up all year. No takedown in January.
+    </aside>
+  </section>
+</main>
+<p class="foot">Hero concept 17 of 10 · "Collage" · demo only.</p>
+<script>document.documentElement.classList.add('js');</script>
+</body>
+</html>
