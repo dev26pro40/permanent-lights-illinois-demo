@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Permanent Christmas Lights, Macomb IL: Hero 18 "2.5D Parallax"</title>
+<style>
+:root{
+  --night:#0e1622;       /* deep blue-slate night */
+  --paper:#f4f7fa;       /* warm white */
+  --gold:#df9f3e;        /* harvest gold (not the old amber) */
+  --mut:#9fb0c3;
+  --line:rgba(244,247,250,.16);
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--paper);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+.nav{position:absolute;top:0;left:0;right:0;z-index:8;display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--paper);font-weight:650;font-size:15px}
+.brand img{width:34px;height:34px;border-radius:8px;background:#fff;padding:2px}
+.nav-cta{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border-radius:999px;background:var(--gold);color:#221503;font-weight:700;font-size:15px;text-decoration:none}
+
+/* 2.5D stage: three depth layers of the same photo */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+.stage{position:absolute;inset:0}
+.layer{position:absolute;inset:-6%;will-change:transform}
+.layer img{width:100%;height:100%;object-fit:cover}
+/* sky: top region, overlaps roofline so no seam */
+.l-sky{z-index:1;clip-path:polygon(0% 0%,100% 0%,100% 40%,92% 47%,84% 41%,74% 37%,63% 35%,55% 43%,47% 51%,39% 57%,31% 63%,23% 67%,0% 69%)}
+/* house: full frame base */
+.l-house{z-index:2}
+/* foreground: lawn/driveway strip, overlaps upward so no seam */
+.l-fore{z-index:3;clip-path:polygon(0% 79%,14% 77%,30% 76%,48% 75%,66% 74%,84% 73%,100% 72%,100% 100%,0% 100%)}
+.stage-grade{position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:linear-gradient(180deg,rgba(14,22,34,.5) 0%,rgba(14,22,34,.06) 30%,rgba(14,22,34,.2) 55%,rgba(10,15,23,.88) 100%)}
+
+.hero-inner{position:relative;z-index:6;width:100%;max-width:1080px;margin:0 auto;padding:110px 20px 54px;will-change:transform}
+.kicker{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;text-shadow:0 1px 12px rgba(0,0,0,.7)}
+h1{font-size:clamp(2.7rem,12vw,5.4rem);line-height:1.02;letter-spacing:-.025em;font-weight:800;text-wrap:balance;max-width:12ch;text-shadow:0 2px 26px rgba(0,0,0,.65)}
+h1 .hl{color:var(--gold)}
+.sub{margin-top:16px;font-size:clamp(1rem,3.8vw,1.22rem);color:var(--mut);max-width:44ch;text-shadow:0 1px 12px rgba(0,0,0,.7)}
+.cta-row{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta{display:inline-flex;align-items:center;min-height:52px;padding:12px 30px;border-radius:999px;background:var(--gold);color:#221503;font-weight:750;font-size:17px;text-decoration:none}
+.cta-note{font-size:14px;color:var(--mut)}
+.trust{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 22px;font-size:13.5px;color:var(--mut)}
+.trust b{color:var(--paper);font-weight:650}
+.sample{position:absolute;z-index:7;top:74px;right:18px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#eef3f8;background:rgba(14,22,34,.55);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+.foot{padding:18px 20px 26px;text-align:center;font-size:12.5px;color:var(--mut);background:var(--night)}
+@media (min-width:760px){.hero-inner{padding-bottom:84px}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  /* flat single image: extra depth layers off */
+  .l-sky,.l-fore{display:none}
+  .l-house{inset:0}
+}
+</style>
+</head>
+<body>
+<header class="hero" id="hero">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/">
+      <img src="assets/premier-duo-monogram.svg" alt="" width="34" height="34">Permanent Lights Illinois</a>
+    <a class="nav-cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get a free quote</a>
+  </nav>
+  <div class="stage" aria-hidden="true">
+    <div class="layer l-house" data-depth="14"><img src="assets/fresh/fp5.webp" alt="" fetchpriority="high"></div>
+    <div class="layer l-sky" data-depth="6"><img src="assets/fresh/fp5.webp" alt=""></div>
+    <div class="layer l-fore" data-depth="26"><img src="assets/fresh/fp5.webp" alt=""></div>
+    <div class="stage-grade"></div>
+  </div>
+  <span class="sample">Sample install</span>
+  <div class="hero-inner" id="hero-type">
+    <span class="kicker">Permanent Christmas lights · Macomb, Illinois</span>
+    <h1>One install. <span class="hl">Every holiday.</span></h1>
+    <p class="sub">A slim track under the soffit. Any color, any night, from your phone. Up all year.</p>
+    <div class="cta-row">
+      <a class="cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get my free quote</a>
+      <span class="cta-note">Free quote. We reply within 24 hours.</span>
+    </div>
+    <div class="trust">
+      <span><b>IronPeak</b> dealer</span>
+      <span><b>5-year</b> product warranty</span>
+      <span><b>App</b> controlled</span>
+    </div>
+  </div>
+</header>
+<p class="foot">Hero concept 18 of 10 · "2.5D Parallax" · demo only.</p>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(pointer: fine)').matches;
+  var hero = document.getElementById('hero');
+  var layers = Array.prototype.slice.call(document.querySelectorAll('.layer'));
+  var type = document.getElementById('hero-type');
+  if (reduce) return; /* flat single image, no motion */
+  var tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+  function render(){
+    cx += (tx - cx) * 0.07;
+    cy += (ty - cy) * 0.07;
+    layers.forEach(function(l){
+      var d = parseFloat(l.getAttribute('data-depth'));
+      l.style.transform = 'translate3d(' + (cx * d).toFixed(2) + 'px,' + (cy * d).toFixed(2) + 'px,0)';
+    });
+    type.style.transform = 'translate3d(' + (cx * -8).toFixed(2) + 'px,' + (cy * -8).toFixed(2) + 'px,0)';
+    if (Math.abs(tx - cx) > 0.01 || Math.abs(ty - cy) > 0.01) { raf = requestAnimationFrame(render); }
+    else { raf = null; }
+  }
+  function kick(){ if (!raf) raf = requestAnimationFrame(render); }
+  if (fine) {
+    /* desktop: pointer parallax */
+    window.addEventListener('pointermove', function(e){
+      var r = hero.getBoundingClientRect();
+      tx = ((e.clientX - (r.left + r.width / 2)) / r.width);
+      ty = ((e.clientY - (r.top + r.height / 2)) / r.height);
+      tx = Math.max(-1, Math.min(1, tx));
+      ty = Math.max(-1, Math.min(1, ty));
+      kick();
+    }, {passive:true});
+    hero.addEventListener('pointerleave', function(){ tx = 0; ty = 0; kick(); });
+  } else {
+    /* mobile: gentle scroll parallax */
+    var ticking = false;
+    function onScroll(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        ticking = false;
+        var r = hero.getBoundingClientRect();
+        var vh = window.innerHeight || 1;
+        var p = Math.max(0, Math.min(1, -r.top / vh));
+        tx = 0; ty = -p * 0.9;
+        kick();
+      });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>
