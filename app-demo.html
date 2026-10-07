@@ -9,8 +9,6 @@
 <!-- APP-DEMO -->
 <link rel="preconnect" href="https://ironpeaklighting.com">
 <style>
-  @property --app1{syntax:"<color>";inherits:true;initial-value:#ffd9a0}
-  @property --app2{syntax:"<color>";inherits:true;initial-value:#ffb35c}
   :root{
     --bg:#070b16; --ink:#f2f5fa; --muted:#c3ccdd; --faint:#8b9bb5;
     --line:#1e2a44; --card:#101828; --amber:#f2b23e; --amber-d:#c98f22;
@@ -94,15 +92,10 @@
   .sched-note{font-size:12px;color:var(--faint);margin-top:8px;min-height:18px}
 
   /* live preview */
-  .pv-wrap{--app1:#ffd9a0;--app2:#ffb35c;--appLevel:.8}
+  .pv-wrap{}
   .preview{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
   .preview img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;transition:filter .5s ease}
-  .preview.off img{filter:brightness(.45) saturate(.7)}
-  .wash{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:var(--appLevel);
-    background:
-      radial-gradient(115% 62% at 50% 2%,var(--app1),transparent 68%),
-      linear-gradient(180deg,var(--app2),transparent 58%);
-    transition:opacity .5s ease,--app1 .5s ease,--app2 .5s ease}
+  .preview canvas{width:100%;height:auto;aspect-ratio:16/10;display:block}
   .pv-cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--faint);
     margin-top:10px}
   .pv-tag{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
@@ -127,7 +120,7 @@
   @media(max-width:480px){.kicker{font-size:11px;letter-spacing:1.5px}}
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
-    .wash,.preview img,.power .pw-track,.power .pw-knob,.switch span{transition:none}
+    .preview img,.power .pw-track,.power .pw-knob,.switch span{transition:none}
   }
 </style>
 </head>
@@ -198,9 +191,8 @@
 
     <div class="pv-wrap">
       <div class="preview" id="preview">
-        <img src="https://ironpeaklighting.com/cdn/shop/t/54/assets/ip-hq-hero-roofline.jpg"
+        <img id="pvImg" src="https://ironpeaklighting.com/cdn/shop/t/54/assets/ip-hq-hero-roofline.jpg"
              alt="Sample install: house at dusk with permanent roofline lights glowing" width="1600" height="900">
-        <div class="wash" aria-hidden="true"></div>
         <span class="pv-tag">Sample install</span>
         <span class="pv-live"><i></i>Live preview</span>
       </div>
@@ -224,6 +216,7 @@
 (function(){
   "use strict";
   var pv = document.getElementById("preview");
+  var pvImg = document.getElementById("pvImg");
   var powerBtn = document.getElementById("powerBtn");
   var bright = document.getElementById("bright");
   var brightVal = document.getElementById("brightVal");
@@ -233,13 +226,129 @@
   var swatches = Array.prototype.slice.call(document.querySelectorAll(".sw"));
   var presets = Array.prototype.slice.call(document.querySelectorAll(".pre"));
 
-  var state = {c1:"#ffd9a0", c2:"#ffb35c", level:80, on:true, name:"Warm white"};
+  var state = {c1:"#ffd9a0", c2:"#ffb35c", level:80, on:true, name:"Warm white", alt:false};
 
+  /* ---------- real light recoloring: canvas compositing, no pixel readback ----------
+     (getImageData would taint on the cross-origin CDN photo, so everything is
+      done with composite ops: multiply to kill the blue, screen to draw lights) */
+  var IW = 1600, IH = 900;
+  var canvas = null, mctx = null, W = 0, H = 0;
+  var sx=0, sy=0, sw=0, sh=0, ready = false, rafQ = false;
+  var photoImg = null, maskImgs = {};
+  var killC = null, offC = null;
+
+  function loadImg(url){
+    return new Promise(function(res, rej){
+      var im = new Image();
+      im.onload = function(){ res(im); };
+      im.onerror = rej;
+      im.src = url;
+    });
+  }
+  function mk(){ var c = document.createElement("canvas"); c.width = W; c.height = H; return c; }
+  function drawCover(x, img){
+    x.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+  }
+  /* white minus strength*mask -> multiply factor that kills the original blue */
+  function invertMask(img, strength){
+    var c = mk(), x = c.getContext("2d");
+    x.fillStyle = "#fff"; x.fillRect(0, 0, W, H);
+    x.globalCompositeOperation = "difference";
+    x.globalAlpha = strength;
+    drawCover(x, img);
+    return c;
+  }
+  /* mask luminance * color on black -> screen-ready light layer */
+  function tintMask(img, color){
+    var c = mk(), x = c.getContext("2d");
+    drawCover(x, img);
+    x.globalCompositeOperation = "multiply";
+    x.fillStyle = color; x.fillRect(0, 0, W, H);
+    return c;
+  }
+  function initCanvas(photo, masks){
+    var dpr = Math.min(1.5, window.devicePixelRatio || 1);
+    var bw = pv.clientWidth || 800;
+    W = Math.round(bw*dpr); H = Math.round(bw*10/16*dpr);
+    canvas = document.createElement("canvas");
+    canvas.setAttribute("aria-label", "Simulated preview of the house with your chosen light colors");
+    canvas.setAttribute("role", "img");
+    canvas.width = W; canvas.height = H;
+    mctx = canvas.getContext("2d");
+    var sc = Math.max(W/IW, H/IH);
+    sw = W/sc; sh = H/sc; sx = (IW-sw)/2; sy = (IH-sh)/2;
+    photoImg = photo; maskImgs = masks;
+    /* kill canvas: photo with the blue dots + spill multiplied away */
+    killC = mk();
+    var kx = killC.getContext("2d");
+    drawCover(kx, photo);
+    kx.globalCompositeOperation = "multiply";
+    kx.drawImage(invertMask(masks.core, 1), 0, 0);
+    kx.drawImage(invertMask(masks.halo, 0.75), 0, 0);
+    /* off canvas: killed photo dimmed */
+    offC = mk();
+    var ox = offC.getContext("2d");
+    ox.drawImage(killC, 0, 0);
+    ox.globalCompositeOperation = "multiply";
+    ox.fillStyle = "#7a7a7a"; ox.fillRect(0, 0, W, H);
+    pv.insertBefore(canvas, pvImg);
+    pvImg.style.display = "none";
+    ready = true;
+    renderCanvas();
+  }
+  function renderCanvas(){
+    var st = state;
+    mctx.globalCompositeOperation = "source-over";
+    mctx.globalAlpha = 1;
+    if(!st.on){ mctx.drawImage(offC, 0, 0); return; }
+    mctx.drawImage(killC, 0, 0);
+    mctx.globalCompositeOperation = "screen";
+    var eff = st.level/100;
+    mctx.globalAlpha = eff;
+    if(st.alt){
+      mctx.drawImage(tintMask(maskImgs.coreA, st.c1), 0, 0);
+      mctx.drawImage(tintMask(maskImgs.coreB, st.c2), 0, 0);
+      mctx.drawImage(tintMask(maskImgs.haloA, st.c1), 0, 0);
+      mctx.drawImage(tintMask(maskImgs.haloB, st.c2), 0, 0);
+    }else{
+      mctx.drawImage(tintMask(maskImgs.core, st.c1), 0, 0);
+      mctx.drawImage(tintMask(maskImgs.halo, st.c1), 0, 0);
+    }
+    mctx.globalAlpha = 1;
+  }
+  function requestRender(){
+    if(!ready) return;
+    if(rafQ) return;
+    rafQ = true;
+    requestAnimationFrame(function(){ rafQ = false; renderCanvas(); });
+  }
+
+  var maskNames = ["core","halo","core-a","core-b","halo-a","halo-b"];
+  var maskKeys = ["core","halo","coreA","coreB","haloA","haloB"];
+  function boot(){
+    var loads = [loadImg(pvImg.getAttribute("src"))].concat(maskNames.map(function(nm){
+      return loadImg("assets/house-dots-"+nm+".png");
+    }));
+    return Promise.all(loads).then(function(imgs){
+      var masks = {};
+      maskKeys.forEach(function(k, i){ masks[k] = imgs[i+1]; });
+      initCanvas(imgs[0], masks);
+    });
+  }
+  boot().catch(function(){ /* CDN or mask failed: static <img> stays */ });
+  var rzT = null;
+  window.addEventListener("resize", function(){
+    if(!ready) return;
+    clearTimeout(rzT);
+    rzT = setTimeout(function(){
+      if(canvas){ canvas.remove(); }
+      ready = false;
+      boot().catch(function(){});
+    }, 300);
+  });
+
+  /* ---------- controls (unchanged UI, rewired to canvas) ---------- */
   function render(){
-    pv.style.setProperty("--app1", state.c1);
-    pv.style.setProperty("--app2", state.c2);
-    pv.style.setProperty("--appLevel", state.on ? (state.level/100) : 0);
-    pv.classList.toggle("off", !state.on);
     powerBtn.setAttribute("aria-checked", state.on ? "true" : "false");
     brightVal.textContent = state.level + "%";
     if(document.activeElement !== bright){ bright.value = state.level; }
@@ -249,6 +358,7 @@
     swatches.forEach(function(b){
       b.setAttribute("aria-pressed", b.getAttribute("data-name") === state.name ? "true" : "false");
     });
+    requestRender();
   }
 
   function wake(){
@@ -261,6 +371,7 @@
       state.c1 = b.getAttribute("data-c1");
       state.c2 = b.getAttribute("data-c2");
       state.name = b.getAttribute("data-name");
+      state.alt = false;
       presets.forEach(function(p){ p.setAttribute("aria-pressed", "false"); });
       render();
     });
@@ -272,6 +383,7 @@
       state.c1 = b.getAttribute("data-c1");
       state.c2 = b.getAttribute("data-c2");
       state.name = b.getAttribute("data-name");
+      state.alt = (state.name === "Christmas");
       var lv = b.getAttribute("data-level");
       if(lv){ state.level = parseInt(lv, 10); }
       presets.forEach(function(p){ p.setAttribute("aria-pressed", p === b ? "true" : "false"); });
