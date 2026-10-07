@@ -228,14 +228,19 @@
 
   var state = {c1:"#ffd9a0", c2:"#ffb35c", level:80, on:true, name:"Warm white", alt:false};
 
-  /* ---------- real light recoloring: canvas compositing, no pixel readback ----------
-     (getImageData would taint on the cross-origin CDN photo, so everything is
-      done with composite ops: multiply to kill the blue, screen to draw lights) */
+  /* 138 detected LED dots: [x, y, radius_px (native 1600x900), group 0=a 1=b] */
+  var DOTS=[[794.3,228.5,3.1,0],[790.3,242.3,3.1,0],[769.0,269.0,3.0,0],[1230.0,312.0,3.0,0],[726.7,315.7,3.1,0],[1226.0,323.2,3.3,0],[389.1,343.3,3.7,0],[1258.5,343.9,3.7,0],[342.0,339.0,3.0,0],[1207.0,339.5,3.0,0],[397.3,340.7,3.0,0],[340.5,347.3,3.3,0],[1191.0,346.0,3.0,0],[1206.2,349.7,3.1,0],[903.0,350.0,3.0,0],[681.6,361.0,3.6,0],[312.4,366.3,3.4,0],[1279.6,364.6,3.5,0],[1174.8,365.2,3.1,0],[417.0,363.0,3.0,0],[1182.0,372.4,3.1,0],[410.0,372.0,3.0,0],[1158.6,381.9,3.2,0],[1296.3,388.3,3.0,0],[293.8,392.1,3.2,0],[435.3,394.3,3.0,0],[1299.0,396.0,3.0,0],[459.6,406.0,3.2,0],[1130.5,410.3,3.2,0],[1381.0,408.0,3.0,0],[1321.3,412.5,3.1,0],[221.8,413.5,3.1,0],[1382.9,420.5,3.3,0],[463.9,417.9,3.1,0],[190.4,433.7,4.0,0],[1358.1,434.7,3.9,0],[1406.4,432.9,3.9,0],[241.4,438.2,3.2,0],[1112.0,443.0,3.0,0],[253.8,454.7,3.9,0],[1090.0,448.5,3.0,0],[1428.8,456.7,4.0,0],[166.2,458.4,3.9,0],[499.3,453.8,3.0,0],[1078.3,459.3,3.0,0],[1087.5,465.0,3.0,0],[1317.4,478.2,3.9,0],[527.8,475.6,3.2,0],[1061.6,482.8,3.4,0],[1071.0,479.0,3.0,0],[277.5,484.5,3.2,0],[1458.0,485.0,3.0,0],[1041.6,503.8,3.9,0],[120.5,503.9,3.8,0],[550.5,504.1,3.8,0],[306.3,502.7,3.1,0],[1023.7,525.6,4.0,0],[1272.8,522.8,3.5,0],[1499.6,525.5,3.8,0],[392.6,530.1,4.1,0],[1206.2,528.8,4.0,0],[1102.0,530.0,4.2,0],[535.5,530.8,4.0,0],[1172.3,530.0,3.9,0],[98.4,529.3,3.5,0],[462.3,530.8,3.9,0],[666.4,532.1,4.2,0],[604.9,533.1,3.8,0],[956.8,532.4,3.7,0],[338.0,530.0,3.0,0],[324.0,533.0,3.0,0],[790.0,232.0,3.0,1],[816.4,264.5,3.1,1],[767.0,267.0,3.1,1],[362.7,319.9,3.6,1],[1233.2,317.6,3.3,1],[1222.0,322.0,3.0,1],[1201.4,341.6,3.7,1],[334.2,340.4,3.2,1],[394.7,337.9,3.1,1],[704.5,339.0,3.0,1],[343.2,340.8,3.0,1],[905.3,357.3,3.5,1],[1257.6,352.2,3.1,1],[1180.3,359.3,3.1,1],[321.0,365.2,3.2,1],[413.0,360.0,3.0,1],[406.8,365.0,3.2,1],[417.0,368.0,3.0,1],[1169.0,368.0,3.0,1],[1275.6,373.1,3.2,1],[1175.8,371.7,3.0,1],[294.1,384.0,3.4,1],[437.7,384.7,3.3,1],[1305.5,388.6,3.4,1],[1152.1,387.5,3.2,1],[268.3,411.5,3.9,1],[1328.9,411.7,3.4,1],[213.7,414.5,3.7,1],[1379.6,412.1,3.5,1],[453.1,409.9,3.1,1],[465.4,412.2,3.1,1],[481.1,432.4,3.6,1],[193.0,428.5,3.0,1],[232.0,434.2,3.3,1],[1106.2,437.6,3.3,1],[1412.3,440.1,3.1,1],[1339.5,453.6,4.0,1],[252.0,446.0,3.0,1],[508.0,455.0,3.4,1],[1085.7,455.5,3.4,1],[172.7,454.2,3.1,1],[272.0,474.8,3.4,1],[143.6,480.5,3.8,1],[1453.8,480.4,3.8,1],[283.2,477.5,3.2,1],[1065.0,475.0,3.0,1],[532.0,484.1,3.2,1],[1071.0,482.0,3.0,1],[298.8,502.6,3.6,1],[1293.9,502.3,3.9,1],[1477.1,503.0,3.9,1],[1049.8,500.8,3.0,1],[1030.5,511.0,3.1,1],[325.3,524.7,4.0,1],[1240.4,527.7,4.0,1],[570.0,528.6,4.0,1],[1066.4,529.3,4.2,1],[500.1,530.2,4.0,1],[1137.1,529.3,4.0,1],[101.0,523.0,3.1,1],[359.4,528.9,3.7,1],[1174.0,522.0,3.0,1],[427.9,530.3,3.9,1],[932.4,531.7,3.7,1],[991.0,532.3,3.6,1],[639.3,533.6,3.8,1],[669.0,534.0,3.0,1],[788.5,216.0,3.1,0],[803.3,237.5,3.2,0],[773.1,256.5,3.6,1],[827.2,259.0,3.8,1],[704.2,323.0,3.0,1],[706.8,324.9,3.1,1],[396.5,324.5,3.0,1],[1258.8,324.6,3.0,0],[709.7,328.8,3.1,1],[895.8,334.2,3.0,0],[924.0,362.5,3.0,1],[424.3,389.3,3.1,0],[276.5,394.0,3.0,0],[1140.0,397.4,3.2,1],[1161.0,397.1,3.1,1],[1317.8,398.8,3.0,0],[1142.3,416.8,3.7,0],[1117.1,421.9,3.4,0],[1342.5,422.0,3.0,1],[1341.7,424.5,3.1,1],[1120.6,435.2,3.2,0],[482.2,446.4,3.2,1],[1099.5,462.0,3.1,0],[502.9,468.7,3.3,1],[516.4,483.6,3.1,0],[522.0,496.2,3.0,1],[321.4,548.8,3.2,0],[327.6,548.3,3.3,0]];
+  /* ---------- real light recoloring: baked no-lights base + per-dot LED sprites ----------
+     The base photo (assets/house-nolights.jpg) has all 166 detected blue dots
+     seamlessly removed offline (blur-fill). At runtime we paint crisp
+     THREE.Points-style sprites (white-hot core, fast falloff, whisper halo)
+     at each dot centroid with 'lighter' blending. No getImageData anywhere,
+     so the cross-origin CDN photo never taints the canvas. */
   var IW = 1600, IH = 900;
   var canvas = null, mctx = null, W = 0, H = 0;
   var sx=0, sy=0, sw=0, sh=0, ready = false, rafQ = false;
-  var photoImg = null, maskImgs = {};
-  var killC = null, offC = null;
+  var nolightsImg = null;
+  var killC = null, offC = null, dotsC = [];
 
   function loadImg(url){
     return new Promise(function(res, rej){
@@ -249,24 +254,36 @@
   function drawCover(x, img){
     x.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
   }
-  /* white minus strength*mask -> multiply factor that kills the original blue */
-  function invertMask(img, strength){
-    var c = mk(), x = c.getContext("2d");
-    x.fillStyle = "#fff"; x.fillRect(0, 0, W, H);
-    x.globalCompositeOperation = "difference";
-    x.globalAlpha = strength;
-    drawCover(x, img);
-    return c;
+  /* crisp LED sprites, THREE.Points style: white-hot core, fast falloff */
+  function hexA(hex, a){
+    var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    return "rgba("+r+","+g+","+b+","+a+")";
   }
-  /* mask luminance * color on black -> screen-ready light layer */
-  function tintMask(img, color){
-    var c = mk(), x = c.getContext("2d");
-    drawCover(x, img);
-    x.globalCompositeOperation = "multiply";
-    x.fillStyle = color; x.fillRect(0, 0, W, H);
-    return c;
+  var spriteCache = {};
+  function dotSprite(color){
+    if(spriteCache[color]) return spriteCache[color];
+    var s = 64, c = document.createElement("canvas"); c.width = c.height = s;
+    var x = c.getContext("2d");
+    var g = x.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+    g.addColorStop(0, "#ffffff");
+    g.addColorStop(0.30, color);
+    g.addColorStop(0.62, hexA(color, 0.35));
+    g.addColorStop(1, hexA(color, 0));
+    x.fillStyle = g; x.fillRect(0,0,s,s);
+    spriteCache[color] = c; return c;
   }
-  function initCanvas(photo, masks){
+  var haloCache = {};
+  function haloSprite(color){
+    if(haloCache[color]) return haloCache[color];
+    var s = 64, c = document.createElement("canvas"); c.width = c.height = s;
+    var x = c.getContext("2d");
+    var g = x.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+    g.addColorStop(0, hexA(color, 0.22));
+    g.addColorStop(1, hexA(color, 0));
+    x.fillStyle = g; x.fillRect(0,0,s,s);
+    haloCache[color] = c; return c;
+  }
+  function initCanvas(nolights){
     var dpr = Math.min(1.5, window.devicePixelRatio || 1);
     var bw = pv.clientWidth || 800;
     W = Math.round(bw*dpr); H = Math.round(bw*10/16*dpr);
@@ -277,14 +294,11 @@
     mctx = canvas.getContext("2d");
     var sc = Math.max(W/IW, H/IH);
     sw = W/sc; sh = H/sc; sx = (IW-sw)/2; sy = (IH-sh)/2;
-    photoImg = photo; maskImgs = masks;
-    /* kill canvas: photo with the blue dots + spill multiplied away */
+    nolightsImg = nolights;
+    /* kill canvas: baked photo with the blue dots seamlessly removed (no CORS pixel reads) */
     killC = mk();
     var kx = killC.getContext("2d");
-    drawCover(kx, photo);
-    kx.globalCompositeOperation = "multiply";
-    kx.drawImage(invertMask(masks.core, 1), 0, 0);
-    kx.drawImage(invertMask(masks.halo, 0.75), 0, 0);
+    drawCover(kx, nolights);
     /* off canvas: killed photo dimmed */
     offC = mk();
     var ox = offC.getContext("2d");
@@ -293,6 +307,9 @@
     ox.fillStyle = "#7a7a7a"; ox.fillRect(0, 0, W, H);
     pv.insertBefore(canvas, pvImg);
     pvImg.style.display = "none";
+    dotsC = DOTS.map(function(d){
+      return {x:(d[0]-sx)*sc, y:(d[1]-sy)*sc, r:d[2]*sc, g:d[3]};
+    });
     ready = true;
     renderCanvas();
   }
@@ -302,17 +319,20 @@
     mctx.globalAlpha = 1;
     if(!st.on){ mctx.drawImage(offC, 0, 0); return; }
     mctx.drawImage(killC, 0, 0);
-    mctx.globalCompositeOperation = "screen";
+    mctx.globalCompositeOperation = "lighter";
     var eff = st.level/100;
     mctx.globalAlpha = eff;
-    if(st.alt){
-      mctx.drawImage(tintMask(maskImgs.coreA, st.c1), 0, 0);
-      mctx.drawImage(tintMask(maskImgs.coreB, st.c2), 0, 0);
-      mctx.drawImage(tintMask(maskImgs.haloA, st.c1), 0, 0);
-      mctx.drawImage(tintMask(maskImgs.haloB, st.c2), 0, 0);
-    }else{
-      mctx.drawImage(tintMask(maskImgs.core, st.c1), 0, 0);
-      mctx.drawImage(tintMask(maskImgs.halo, st.c1), 0, 0);
+    var i, d, col, hr;
+    for(i=0;i<dotsC.length;i++){
+      d = dotsC[i];
+      col = st.alt ? (d.g === 0 ? st.c1 : st.c2) : st.c1;
+      hr = d.r*3.0;
+      mctx.drawImage(haloSprite(col), d.x-hr, d.y-hr, hr*2, hr*2);
+    }
+    for(i=0;i<dotsC.length;i++){
+      d = dotsC[i];
+      col = st.alt ? (d.g === 0 ? st.c1 : st.c2) : st.c1;
+      mctx.drawImage(dotSprite(col), d.x-d.r, d.y-d.r, d.r*2, d.r*2);
     }
     mctx.globalAlpha = 1;
   }
@@ -323,19 +343,12 @@
     requestAnimationFrame(function(){ rafQ = false; renderCanvas(); });
   }
 
-  var maskNames = ["core","halo","core-a","core-b","halo-a","halo-b"];
-  var maskKeys = ["core","halo","coreA","coreB","haloA","haloB"];
   function boot(){
-    var loads = [loadImg(pvImg.getAttribute("src"))].concat(maskNames.map(function(nm){
-      return loadImg("assets/house-dots-"+nm+".png");
-    }));
-    return Promise.all(loads).then(function(imgs){
-      var masks = {};
-      maskKeys.forEach(function(k, i){ masks[k] = imgs[i+1]; });
-      initCanvas(imgs[0], masks);
+    return loadImg("assets/house-nolights.jpg").then(function(nolights){
+      initCanvas(nolights);
     });
   }
-  boot().catch(function(){ /* CDN or mask failed: static <img> stays */ });
+  boot().catch(function(){ /* base image failed: static <img> stays */ });
   var rzT = null;
   window.addEventListener("resize", function(){
     if(!ready) return;
