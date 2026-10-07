@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Permanent Christmas Lights, Macomb IL — Hero 22 "Grain + grade"</title>
+<style>
+/* Palette pulled from the photo: deep blue-black night sky + signal red dots.
+   Not the old navy/amber tokens. */
+:root{
+  --ink:#0b0f16;
+  --ink-2:#111722;
+  --paper:#f4efe3;
+  --signal:#d8402f;
+  --signal-deep:#a82e21;
+  --txt:#f2ede1;
+  --mut:#a9b2c2;
+  --line:rgba(244,239,227,.16);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{background:var(--ink);color:var(--txt);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;background:var(--ink)}
+.photo{position:absolute;inset:0;z-index:0}
+.photo img{width:100%;height:100%;object-fit:cover;
+  /* the film grade: punch the contrast, warm the highlights a touch */
+  filter:saturate(1.12) contrast(1.08) brightness(.94) sepia(.10)}
+.grade{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 50% 8%, rgba(216,64,47,.10), rgba(216,64,47,0) 55%),
+    linear-gradient(180deg, rgba(11,15,22,.52) 0%, rgba(11,15,22,.06) 30%, rgba(11,15,22,.10) 55%, rgba(11,15,22,.86) 100%)}
+.grain{position:absolute;inset:-80px;z-index:2;pointer-events:none;opacity:.14;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
+  animation:grain 1.2s steps(4) infinite}
+@keyframes grain{
+  0%{transform:translate(0,0)}25%{transform:translate(-22px,14px)}
+  50%{transform:translate(16px,-24px)}75%{transform:translate(-12px,-16px)}
+  100%{transform:translate(0,0)}}
+
+.topbar{position:relative;z-index:4;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:650;font-size:14.5px;
+  color:var(--txt);text-shadow:0 1px 10px rgba(0,0,0,.8)}
+.brand img{width:32px;height:32px;border-radius:8px;background:#fff;padding:2px}
+.sample{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#e8e2d4;
+  background:rgba(11,15,22,.6);border:1px solid var(--line);padding:7px 13px;border-radius:999px;
+  white-space:nowrap}
+
+/* content slab: overlaps the photo, breaks the grid */
+.content{position:relative;z-index:3;margin-top:auto;padding:0 20px 30px;max-width:640px;
+  animation:rise .7s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.kickrow{position:relative;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+/* full-bleed hairline above the kicker: breaks the grid */
+.kickrow::before{content:"";position:absolute;top:-14px;left:50%;width:100vw;height:1px;
+  background:var(--line);transform:translateX(-50%)}
+.kick{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--signal);
+  text-shadow:0 1px 8px rgba(0,0,0,.8);background:rgba(11,15,22,.72);padding:7px 13px;border-radius:4px;
+  position:relative;z-index:1}
+.kickrule{width:34px;height:2px;background:var(--signal);flex:none}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:700;
+  font-size:clamp(2.55rem,10.8vw,3.6rem);line-height:1.04;letter-spacing:-.01em;
+  color:var(--paper);text-wrap:balance;text-shadow:0 2px 28px rgba(0,0,0,.75)}
+/* the headline slab breaks right past the padding edge */
+h1 .break{display:block;margin-right:-20px;padding-right:20px}
+.sub{margin-top:14px;font-size:clamp(1rem,3.8vw,1.12rem);color:#d6dbe6;max-width:36ch;
+  text-shadow:0 1px 14px rgba(0,0,0,.85)}
+.cta-row{margin-top:22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.cta{display:inline-flex;align-items:center;justify-content:center;min-height:54px;
+  padding:13px 30px;border-radius:6px;background:var(--signal);color:#fff;
+  font-weight:750;font-size:17px;text-decoration:none;letter-spacing:.01em;
+  box-shadow:0 6px 28px rgba(216,64,47,.35)}
+.cta:hover{background:var(--signal-deep)}
+.cta:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+.cta-note{font-size:14px;color:var(--mut);text-shadow:0 1px 8px rgba(0,0,0,.8)}
+/* ghost numeral straddling the content/photo edge */
+.ghost{position:absolute;z-index:2;right:6px;bottom:210px;font-family:Georgia,serif;
+  font-size:clamp(5rem,26vw,7rem);line-height:1;color:transparent;
+  -webkit-text-stroke:1px rgba(244,239,227,.22);pointer-events:none;user-select:none}
+
+.foot{position:relative;z-index:4;padding:16px 20px 22px;text-align:center;
+  font-size:12.5px;color:var(--mut);background:var(--ink);border-top:1px solid var(--line)}
+
+@media (min-width:900px){
+  .topbar{padding:20px 34px}
+  .content{padding:0 0 64px 64px;max-width:760px}
+  h1{font-size:clamp(3.4rem,5.6vw,5rem)}
+  h1 .break{margin-right:-9vw;padding-right:9vw}
+  .ghost{right:8vw;bottom:auto;top:18vh;font-size:11rem}
+  .sub{font-size:1.15rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .grain{animation:none}
+  .content{animation:none}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="photo" aria-hidden="true">
+    <img src="assets/fresh/fp8.webp" alt="" fetchpriority="high">
+  </div>
+  <div class="grade" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="topbar">
+    <a class="brand" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/">
+      <img src="assets/premier-duo-monogram.svg" alt="" width="32" height="32">Permanent Lights Illinois</a>
+    <span class="sample">Sample install</span>
+  </div>
+
+  <span class="ghost" aria-hidden="true">22</span>
+
+  <div class="content">
+    <div class="kickrow">
+      <span class="kickrule" aria-hidden="true"></span>
+      <p class="kick">Permanent Christmas lights · Macomb, Illinois</p>
+    </div>
+    <h1><span class="break">The lights stay up.</span> Every night of the year.</h1>
+    <p class="sub">Warm white in March. Red, white, and blue in July. Christmas in December. One install, run from your phone.</p>
+    <div class="cta-row">
+      <a class="cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/index.html#quote">Get my free quote</a>
+      <span class="cta-note">Free quote. Reply within 24 hours.</span>
+    </div>
+  </div>
+</header>
+<p class="foot">Hero concept 22 of 10 — "Grain + grade" — demo only.</p>
+</body>
+</html>
