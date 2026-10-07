@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Permanent Christmas Lights, Macomb IL — Hero 15 "Light It Up"</title>
+<style>
+:root{--bg:#070b16;--ink:#04060c;--amber:#f2b23e;--txt:#eef2f9;--mut:#a9b7cf;--line:rgba(255,255,255,.14);--r:16px;--mx:50%;--my:42%}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+.nav{position:absolute;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--txt);font-weight:650;font-size:15px}
+.brand img{width:34px;height:34px;border-radius:8px;background:#fff;padding:2px}
+.nav-cta{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border-radius:999px;background:var(--amber);color:#1a1206;font-weight:700;font-size:15px;text-decoration:none}
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+.base,.lit{position:absolute;inset:0}
+.base img,.lit img{width:100%;height:100%;object-fit:cover}
+.lit{
+  -webkit-mask-image:radial-gradient(340px circle at var(--mx) var(--my),#000 0%,rgba(0,0,0,.85) 42%,transparent 72%);
+  mask-image:radial-gradient(340px circle at var(--mx) var(--my),#000 0%,rgba(0,0,0,.85) 42%,transparent 72%);
+}
+.base::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,6,12,.5),rgba(4,6,12,.25) 40%,rgba(4,6,12,.92))}
+.hero-inner{position:relative;z-index:4;width:100%;max-width:1060px;margin:0 auto;padding:120px 20px 54px}
+.kicker{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;text-shadow:0 1px 12px rgba(0,0,0,.85),0 1px 3px rgba(0,0,0,.9)}
+h1{font-size:clamp(2.4rem,8.5vw,4.4rem);line-height:1.05;letter-spacing:-.02em;text-wrap:balance;text-shadow:0 2px 24px rgba(0,0,0,.65)}
+.sub{margin-top:14px;font-size:clamp(1rem,3.6vw,1.18rem);color:var(--mut);max-width:46ch}
+.hintline{margin-top:14px;display:inline-flex;align-items:center;gap:9px;font-size:13.5px;color:var(--amber);border:1px solid rgba(242,178,62,.4);border-radius:999px;padding:8px 16px;background:rgba(4,6,12,.5)}
+.cta-row{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta{display:inline-flex;align-items:center;min-height:52px;padding:12px 28px;border-radius:999px;background:var(--amber);color:#1a1206;font-weight:750;font-size:17px;text-decoration:none}
+.cta-note{font-size:14px;color:var(--mut)}
+.sample{position:absolute;z-index:5;top:74px;right:18px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#dfe6f2;background:rgba(4,6,12,.55);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+.foot{padding:18px 20px 26px;text-align:center;font-size:12.5px;color:var(--mut);background:var(--ink)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="hero" id="stage">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/">
+      <img src="assets/premier-duo-monogram.svg" alt="" width="34" height="34">Permanent Lights Illinois</a>
+    <a class="nav-cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/#quote">Get a free quote</a>
+  </nav>
+  <div class="base" aria-hidden="true">
+    <img src="assets/house-nolights.jpg" alt="" fetchpriority="high">
+  </div>
+  <div class="lit" aria-hidden="true">
+    <img src="https://ironpeaklighting.com/cdn/shop/t/54/assets/ip-hq-hero-roofline.jpg" alt="">
+  </div>
+  <span class="sample">Sample install</span>
+  <div class="hero-inner">
+    <span class="kicker">Permanent Christmas lights · Macomb, Illinois</span>
+    <h1>Go ahead. Light it up.</h1>
+    <p class="sub">This is the whole product: light where you point, any color you want, from your phone. The track stays invisible by day.</p>
+    <p class="hintline" id="hint"><span aria-hidden="true">&#10022;</span> Move your pointer across the house</p>
+    <div class="cta-row">
+      <a class="cta" href="https://dev26pro40.github.io/permanent-lights-illinois-demo/#quote">Get my free quote</a>
+      <span class="cta-note">Free quote. We reply within 24 hours.</span>
+    </div>
+  </div>
+</header>
+<p class="foot">Hero concept 10 of 10 — "Light It Up" — demo only.</p>
+<script>
+(function(){
+  var stage=document.getElementById('stage'),hint=document.getElementById('hint');
+  var fine=window.matchMedia('(pointer:fine)').matches;
+  var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||rm){ // no pointer tricks: show the lit house fully
+    stage.style.setProperty('--mx','50%');stage.style.setProperty('--my','42%');
+    var lit=stage.querySelector('.lit');
+    lit.style.webkitMaskImage='none';lit.style.maskImage='none';
+    hint.style.display='none';return;
+  }
+  var tx=50,ty=42,cx=50,cy=42,raf=null;
+  function loop(){
+    cx+=(tx-cx)*0.08;cy+=(ty-cy)*0.08;
+    stage.style.setProperty('--mx',cx.toFixed(2)+'%');
+    stage.style.setProperty('--my',cy.toFixed(2)+'%');
+    if(Math.abs(tx-cx)>0.02||Math.abs(ty-cy)>0.02){raf=requestAnimationFrame(loop)}else{raf=null}
+  }
+  function kick(){if(raf===null)raf=requestAnimationFrame(loop)}
+  stage.addEventListener('pointermove',function(e){
+    var r=stage.getBoundingClientRect();
+    tx=((e.clientX-r.left)/r.width)*100;ty=((e.clientY-r.top)/r.height)*100;kick();
+  },{passive:true});
+  stage.addEventListener('pointerleave',function(){tx=50;ty=42;kick()});
+})();
+</script>
+</body>
+</html>
